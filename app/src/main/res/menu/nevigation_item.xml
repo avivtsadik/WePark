@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/optionHome"
-        android:title="Home"
-        android:icon="@drawable/ic_baseline_home_24"/>
-    <item
-        android:id="@+id/optionManageFavorites"
-        android:title="ManageFavorites"
-        android:icon="@drawable/ic_baseline_favorite_24"/>
-    <item
-        android:id="@+id/optionMyPosts"
-        android:title="MyPosts"
-        android:icon="@drawable/ic_baseline_view_list_24"/>
-    <item
-        android:id="@+id/optionProfile"
-        android:title="Profile"
-        android:icon="@drawable/ic_baseline_settings_24"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/optionHome"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/optionManageFavorites"
+            android:icon="@drawable/ic_baseline_favorite_24"
+            android:title="@string/manageFavorites" />
+        <item
+            android:id="@+id/optionMyPosts"
+            android:icon="@drawable/ic_baseline_view_list_24"
+            android:title="@string/myPosts" />
+        <item
+            android:id="@+id/optionProfile"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/profile" />
+
+    </group>
 </menu>

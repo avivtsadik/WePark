@@ -1,13 +1,9 @@
 package com.example.wepark.activities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.wepark.R;
 import com.example.wepark.activities.mainFragments.HomeFragment;
 import com.example.wepark.activities.mainFragments.ManageFavoritesFragment;
+import com.example.wepark.activities.mainFragments.MyPostsFragment;
+import com.example.wepark.activities.mainFragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-
+                item.setChecked(true);
                 switch (id) {
                     case R.id.optionHome: {
                         loadFragment(new HomeFragment());
@@ -63,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.optionMyPosts: {
-                        loadFragment(new HomeFragment());
+                        loadFragment(new MyPostsFragment());
                         break;
                     }
                     case R.id.optionProfile: {
-                        loadFragment(new ManageFavoritesFragment());
+                        loadFragment(new ProfileFragment());
                         break;
                     }
                 }
