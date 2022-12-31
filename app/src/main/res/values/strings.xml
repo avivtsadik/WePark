@@ -8,4 +8,5 @@
     <string name="myPosts">My Posts</string>
     <string name="profile">Profile</string>
     <string name="home">Home</string>
+    <string name="logOut">Log out</string>
 </resources>
