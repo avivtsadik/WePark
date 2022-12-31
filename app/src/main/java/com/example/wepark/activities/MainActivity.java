@@ -54,18 +54,22 @@ public class MainActivity extends AppCompatActivity {
                 switch (id) {
                     case R.id.optionHome: {
                         loadFragment(new HomeFragment());
+                        toolbar.setTitle(R.string.app_name);
                         break;
                     }
                     case R.id.optionManageFavorites: {
                         loadFragment(new ManageFavoritesFragment());
+                        toolbar.setTitle(R.string.manageFavorites);
                         break;
                     }
                     case R.id.optionMyPosts: {
                         loadFragment(new MyPostsFragment());
+                        toolbar.setTitle(R.string.myPosts);
                         break;
                     }
                     case R.id.optionProfile: {
                         loadFragment(new ProfileFragment());
+                        toolbar.setTitle(R.string.profile);
                         break;
                     }
                 }
