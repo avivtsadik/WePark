@@ -14,10 +14,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wepark.R;
-import com.example.wepark.activities.mainFragments.HomeFragment;
-import com.example.wepark.activities.mainFragments.ManageFavoritesFragment;
-import com.example.wepark.activities.mainFragments.MyPostsFragment;
-import com.example.wepark.activities.mainFragments.ProfileFragment;
+import fragments.mainFragments.HomeFragment;
+import fragments.mainFragments.ManageFavoritesFragment;
+import fragments.mainFragments.MyPostsFragment;
+import fragments.mainFragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {

@@ -2,12 +2,11 @@ package com.example.wepark.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 
 import com.example.wepark.R;
+import fragments.loginFragments.LoginFragment;
+import fragments.loginFragments.SignUpFragment;
 
 public class LoginActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     @Override
