@@ -1,7 +1,9 @@
 package com.example.wepark.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    TextView logoutTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
+        });
+
+        logoutTextView = findViewById(R.id.logoutBtn);
+
+        logoutTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
