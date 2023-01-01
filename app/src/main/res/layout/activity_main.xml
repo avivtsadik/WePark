@@ -36,12 +36,12 @@
             android:padding="7dp">
 
             <TextView
-                android:id="@+id/logout"
+                android:id="@+id/logoutBtn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/logOut"
-                android:textColor="@color/background"
+                android:textColor="@color/primary"
                 android:textSize="18sp" />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>

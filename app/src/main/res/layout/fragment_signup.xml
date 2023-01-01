@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#344D67"
-    tools:context=".activities.SignUpFragment">
+    tools:context="fragments.loginFragments.SignUpFragment">
 
 
     <Button
@@ -29,8 +29,8 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/background"
+        android:textColorHint="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,8 +47,8 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:pointerIcon="arrow"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/background"
+        android:textColorHint="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,8 +72,8 @@
         android:layout_marginBottom="19dp"
         android:clickable="true"
         android:text="Already have an account? Log in"
-        android:textColor="@color/white"
-        android:textSize="12dp"
+        android:textColor="@color/background"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

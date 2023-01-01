@@ -15,7 +15,7 @@
             android:title="@string/myPosts" />
         <item
             android:id="@+id/optionProfile"
-            android:icon="@drawable/ic_baseline_settings_24"
+            android:icon="@drawable/ic_baseline_account_circle_24"
             android:title="@string/profile" />
 
     </group>

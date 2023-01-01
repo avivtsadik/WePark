@@ -4,31 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#344D67"
-    tools:context=".activities.LoginFragment">
+    android:background="@color/primary"
+    tools:context="fragments.loginFragments.LoginFragment">
 
     <Button
-        android:id="@+id/loginbtn"
+        android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="44dp"
-        android:backgroundTint="#6ECCAF"
+        android:backgroundTint="@color/secondary"
         android:text="Log in"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
     <Button
-        android:id="@+id/signupbtn"
+        android:id="@+id/signupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/background"
         android:text="Sign up"
-        android:textColor="#6ECCAF"
+        android:textColor="@color/secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toEndOf="@+id/loginbtn"
+        app:layout_constraintStart_toEndOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
     <EditText
@@ -41,8 +41,8 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/background"
+        android:textColorHint="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +59,8 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:pointerIcon="arrow"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/background"
+        android:textColorHint="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
         android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginbtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn"
         tools:ignore="MissingClass" />
 
     <TextView
@@ -83,9 +83,9 @@
         android:layout_marginEnd="70dp"
         android:clickable="true"
         android:text="Forgot password?"
-        android:textColor="@color/white"
+        android:textColor="@color/background"
         android:textSize="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/signupbtn"
+        app:layout_constraintBottom_toTopOf="@+id/signupBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
         app:layout_constraintVertical_bias="0.0" />

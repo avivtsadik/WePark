@@ -1,4 +1,4 @@
-package com.example.wepark.activities.mainFragments;
+package fragments.mainFragments;
 
 import android.os.Bundle;
 

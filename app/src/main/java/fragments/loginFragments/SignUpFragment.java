@@ -1,4 +1,4 @@
-package com.example.wepark.activities;
+package fragments.loginFragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wepark.R;
+import com.example.wepark.activities.OnFragmentInteractionListener;
 
 public class SignUpFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -20,8 +21,16 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Activity activity = getActivity();
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity
+                    + " must implement OnFragmentInteractionListener");
+        }
         FragmentActivity parentActivity = getActivity();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,16 +43,6 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
     @Override
     public void onDetach() {
         super.onDetach();
