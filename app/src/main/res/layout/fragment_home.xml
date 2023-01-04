@@ -9,15 +9,20 @@
     tools:context="fragments.mainFragments.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/parkingListTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Parking lots you may like"
+            android:padding="10dp"
+            android:text="Parking lots you may like:"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            app:drawableStartCompat="@drawable/ic_baseline_favorite_24"
+            app:drawableTint="@color/primary"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
