@@ -71,7 +71,7 @@ public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> 
     @NonNull
     @Override
     public ParkingListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.parking_list_row, parent, false);
+        View view = inflater.inflate(R.layout.parking_card, parent, false);
         return new ParkingListHolder(view, listener, data);
     }
 
