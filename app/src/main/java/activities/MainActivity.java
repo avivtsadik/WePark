@@ -16,13 +16,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wepark.R;
+
+import fragments.mainFragments.EditParkingFragment;
 import fragments.mainFragments.HomeFragment;
 import fragments.mainFragments.ManageFavoritesFragment;
 import fragments.mainFragments.MyPostsFragment;
 import fragments.mainFragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -100,12 +102,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loadFragment(Fragment fragment) {
+    @Override
+    public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
         ft.replace(R.id.container, fragment);
         ft.commit();
-
     }
 }

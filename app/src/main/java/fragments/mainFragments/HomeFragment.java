@@ -1,8 +1,10 @@
 package fragments.mainFragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,10 +14,14 @@ import android.view.ViewGroup;
 
 import com.example.wepark.R;
 
+import activities.MainActivity;
+import activities.OnFragmentInteractionListener;
 import adapters.ParkingListAdapter;
+import fragments.loginFragments.LoginFragment;
 import models.ParkingMock;
 
 public class HomeFragment extends Fragment {
+    private OnFragmentInteractionListener mListener;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -31,7 +37,31 @@ public class HomeFragment extends Fragment {
         ParkingListAdapter adapter = new ParkingListAdapter(getLayoutInflater(), ParkingMock.instance().getParkingLots());
         list.setAdapter(adapter);
 
+        View addParkingBtn = view.findViewById(R.id.addParkingButton);
+        addParkingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.loadFragment(new EditParkingFragment());
+            }
+        });
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }

@@ -1,9 +1,17 @@
 package activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.wepark.R;
 
@@ -21,15 +29,11 @@ public class LoginActivity extends AppCompatActivity implements OnFragmentIntera
     }
 
     @Override
-    public void changeFragment() {
-        androidx.fragment.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        LoginFragment myFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag("LOGIN_FRAGMENT");
-        if (myFragment != null && myFragment.isVisible()) {
-            ft.replace(R.id.frameContainer, new SignUpFragment(), "SIGNUP_FRAGMENT");
-            ft.commit();
-        } else {
-            ft.replace(R.id.frameContainer, new LoginFragment(), "LOGIN_FRAGMENT");
-            ft.commit();
-        }
+    public void loadFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        ft.replace(R.id.frameContainer, fragment);
+        ft.commit();
     }
 }
