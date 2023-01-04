@@ -32,7 +32,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         Button signupBtn = view.findViewById(R.id.signupBtn);
         signupBtn.setOnClickListener(view1 -> {
-            mListener.changeFragment();
+            mListener.loadFragment(new SignUpFragment());
         });
 
         Button loginBtn = view.findViewById(R.id.loginBtn);

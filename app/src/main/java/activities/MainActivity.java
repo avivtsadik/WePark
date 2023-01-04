@@ -24,7 +24,7 @@ import fragments.mainFragments.MyPostsFragment;
 import fragments.mainFragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.optionProfile: {
-                        loadFragment(new EditParkingFragment());
+                        loadFragment(new ProfileFragment());
                         toolbar.setTitle(R.string.profile);
                         break;
                     }
@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loadFragment(Fragment fragment) {
+    @Override
+    public void loadFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
         ft.replace(R.id.container, fragment);
         ft.commit();
-
     }
 }
