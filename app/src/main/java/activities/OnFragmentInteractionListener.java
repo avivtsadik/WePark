@@ -1,5 +1,7 @@
 package activities;
 
+import androidx.fragment.app.Fragment;
+
 public interface OnFragmentInteractionListener {
-    public void changeFragment();
+    public void loadFragment(Fragment fragment);
 }
