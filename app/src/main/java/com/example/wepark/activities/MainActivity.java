@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wepark.R;
+
+import fragments.mainFragments.EditParkingFragment;
 import fragments.mainFragments.HomeFragment;
 import fragments.mainFragments.ManageFavoritesFragment;
 import fragments.mainFragments.MyPostsFragment;
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.optionProfile: {
-                        loadFragment(new ProfileFragment());
+                        loadFragment(new EditParkingFragment());
                         toolbar.setTitle(R.string.profile);
                         break;
                     }

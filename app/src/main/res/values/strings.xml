@@ -8,5 +8,12 @@
     <string name="myPosts">My Posts</string>
     <string name="profile">Profile</string>
     <string name="home">Home</string>
+    <string name="edit">Edit Parking:</string>
     <string name="logOut">Log out</string>
+    <string-array name="city">
+        <item>Tel aviv</item>
+        <item>Shoham</item>
+        <item>Rishon letzion</item>
+        <item>Holon</item>
+    </string-array>
 </resources>
