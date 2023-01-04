@@ -1,4 +1,4 @@
-package com.example.wepark.activities;
+package activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;

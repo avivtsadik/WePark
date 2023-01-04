@@ -9,4 +9,5 @@
     <string name="profile">Profile</string>
     <string name="home">Home</string>
     <string name="logOut">Log out</string>
+    <string name="add_parking">Add Parking</string>
 </resources>

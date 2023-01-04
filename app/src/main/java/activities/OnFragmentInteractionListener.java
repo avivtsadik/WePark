@@ -1,4 +1,4 @@
-package com.example.wepark.activities;
+package activities;
 
 public interface OnFragmentInteractionListener {
     public void changeFragment();
