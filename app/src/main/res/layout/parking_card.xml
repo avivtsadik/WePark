@@ -26,23 +26,29 @@
                 android:gravity="center|start"
                 android:orientation="vertical"
                 android:padding="10sp">
+
                 <TextView
                     android:id="@+id/cityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="City"
+                    android:textSize="18dp"
                     card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
+
                 <TextView
                     android:id="@+id/streetTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Street"
+                    android:textSize="18dp"
                     card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
+
                 <TextView
                     android:id="@+id/sizeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Size"
+                    android:textSize="18dp"
                     card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
             </LinearLayout>
 
