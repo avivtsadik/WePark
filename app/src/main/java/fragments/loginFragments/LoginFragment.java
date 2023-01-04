@@ -8,15 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wepark.R;
-import com.example.wepark.activities.LoginActivity;
-import com.example.wepark.activities.MainActivity;
-import com.example.wepark.activities.OnFragmentInteractionListener;
+
+import activities.MainActivity;
+import activities.OnFragmentInteractionListener;
 
 public class LoginFragment extends Fragment {
     private OnFragmentInteractionListener mListener;

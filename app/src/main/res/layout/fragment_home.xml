@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="fragments.mainFragments.HomeFragment"
-    android:id="@+id/homeFragment">
+    tools:context="fragments.mainFragments.HomeFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="home fragment" />
+        android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/parkingListTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Parking lots you may like"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/parkingList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/addParkingButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/parkingListTitle" />
+
+        <Button
+            android:id="@+id/addParkingButton"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/add_parking"
+            android:text="@string/add_parking"
+            android:textColor="@color/background"
+            android:textSize="35sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

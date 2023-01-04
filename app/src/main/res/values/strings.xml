@@ -10,6 +10,7 @@
     <string name="home">Home</string>
     <string name="edit">Edit Parking:</string>
     <string name="logOut">Log out</string>
+    <string name="add_parking">Add Parking</string>
     <string-array name="city">
         <item>Tel aviv</item>
         <item>Shoham</item>
