@@ -11,7 +11,7 @@
         android:layout_height="170dp"
         android:layout_margin="10dp"
         card_view:cardBackgroundColor="@color/secondary"
-        card_view:cardCornerRadius="15dp"
+        card_view:cardCornerRadius="@dimen/radius_bg"
         card_view:cardElevation="5dp">
 
         <LinearLayout
@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="City"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/title_md"
                     card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
 
                 <TextView
@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Street"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/title_md"
                     card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
 
                 <TextView
@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Size"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/title_md"
                     card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
             </LinearLayout>
 

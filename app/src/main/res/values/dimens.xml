@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_bg">20sp</dimen>
+    <dimen name="title_md">15sp</dimen>
+    <dimen name="title_sm">10sp</dimen>
+    <dimen name="radius_bg">15sp</dimen>
+    <dimen name="radius_md">10sp</dimen>
+    <dimen name="radius_sm">5sp</dimen>
+</resources>

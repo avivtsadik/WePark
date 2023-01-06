@@ -11,6 +11,8 @@
     <string name="edit">Edit Parking:</string>
     <string name="logOut">Log out</string>
     <string name="add_parking">Add Parking</string>
+    <string name="already_have_an_account_log_in"><u>Already have an account? Log in</u></string>
+    <string name="forgot_password"><u>Forgot password?</u></string>
     <string-array name="city">
         <item>Tel aviv</item>
         <item>Shoham</item>
