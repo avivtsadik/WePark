@@ -23,10 +23,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:gravity="center_vertical"
-                android:text="@string/edit"
+                android:text="@string/add_parking"
                 android:textColor="@color/primary"
                 android:textSize="25dp"
-                app:drawableLeftCompat="@drawable/ic_baseline_edit_24"
+                app:drawableLeftCompat="@android:drawable/ic_menu_add"
                 app:drawableTint="@color/primary" />
         </LinearLayout>
 
@@ -49,11 +49,10 @@
                 card_view:cardElevation="5dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
-
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -222,20 +221,11 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
-                android:id="@+id/savebtn"
-                android:layout_width="238dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="4dp"
-                android:background="@color/secondary"
-                android:text="Save"
-                android:textColor="@android:color/white" />
-
-            <Button
                 android:id="@+id/cancelbtn"
-                android:layout_width="170dp"
-                android:layout_height="45dp"
-                android:background="@color/grey"
-                android:text="Cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/red"
+                android:text="Share!"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

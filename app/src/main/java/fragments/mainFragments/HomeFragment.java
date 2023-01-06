@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
         addParkingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.loadFragment(new EditParkingFragment());
+                mListener.loadFragment(new AddParkingFragment());
             }
         });
         // Inflate the layout for this fragment
