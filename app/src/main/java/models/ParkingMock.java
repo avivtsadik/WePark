@@ -1,6 +1,5 @@
 package models;
 
-import java.util.List;
 import java.util.Vector;
 
 public class ParkingMock {
@@ -22,7 +21,7 @@ public class ParkingMock {
         this.parkingLots.add(parking);
     }
 
-    public List<Parking> getParkingLots() {
+    public Vector<Parking> getParkingLots() {
         return this.parkingLots;
     }
 }
