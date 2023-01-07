@@ -4,8 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wepark.R;
@@ -13,12 +15,15 @@ import com.example.wepark.R;
 import java.util.List;
 
 import models.Parking;
+import models.ParkingMock;
 import models.ParkingSize;
 
 class ParkingListHolder extends RecyclerView.ViewHolder {
     TextView cityTv;
     TextView streetTv;
     TextView sizeTv;
+    AppCompatImageView editPostButton;
+    AppCompatImageView deletePostButton;
     List<Parking> data;
 
     public ParkingListHolder(@NonNull View itemView, ParkingListAdapter.OnItemClickListener listener, List<Parking> data) {
@@ -27,6 +32,21 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
         cityTv = itemView.findViewById(R.id.cityTextView);
         streetTv = itemView.findViewById(R.id.streetTextView);
         sizeTv = itemView.findViewById(R.id.sizeTextView);
+        editPostButton = itemView.findViewById(R.id.editPostButton);
+        deletePostButton = itemView.findViewById(R.id.deletePostButton);
+
+        if (editPostButton != null) {
+            editPostButton.setOnClickListener(view -> {
+                itemView.getContext();
+            });
+        }
+
+        if (deletePostButton != null) {
+            deletePostButton.setOnClickListener(view -> {
+
+            });
+        }
+
     }
 
     public void bind(Parking parking, int pos) {

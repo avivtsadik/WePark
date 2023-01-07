@@ -43,7 +43,7 @@
                 android:id="@+id/parkingCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 card_view:cardBackgroundColor="@color/secondary"
                 card_view:cardCornerRadius="@dimen/radius_bg"
                 card_view:cardElevation="5dp">
@@ -52,6 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
 
@@ -223,20 +224,21 @@
 
             <Button
                 android:id="@+id/savebtn"
-                android:layout_width="238dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="4dp"
-                android:background="@color/secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/primary"
                 android:text="Save"
-                android:textColor="@android:color/white" />
+                android:layout_weight="0.7"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/cancelbtn"
-                android:layout_width="170dp"
-                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@color/grey"
+                android:layout_weight="0.3"
                 android:text="Cancel"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/white" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

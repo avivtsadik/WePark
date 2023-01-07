@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 switch (id) {
                     case R.id.optionHome: {
                         loadFragment(new HomeFragment());
-                        toolbar.setTitle(R.string.app_name);
+                        toolbar.setTitle(R.string.home);
                         break;
                     }
                     case R.id.optionManageFavorites: {

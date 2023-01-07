@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     android:screenOrientation="portrait"
     tools:context="activities.MainActivity"
+
     tools:openDrawer="start">
 
     <include
@@ -23,9 +24,10 @@
         android:background="@color/primary"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/activity_main_drawer_header"
-        app:itemBackground="@drawable/drawer_item_selector"
+        app:itemBackground="@drawable/drawer_item"
         app:itemIconTint="@color/background"
         app:itemTextColor="@color/background"
+
         app:menu="@menu/nevigation_item">
 
         <LinearLayout

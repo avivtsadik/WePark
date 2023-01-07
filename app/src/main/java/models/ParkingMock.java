@@ -1,5 +1,9 @@
 package models;
 
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 public class ParkingMock {
@@ -19,6 +23,10 @@ public class ParkingMock {
 
     private void addParkingLot(Parking parking) {
         this.parkingLots.add(parking);
+    }
+
+    public void deleteParkingLot() {
+
     }
 
     public Vector<Parking> getParkingLots() {
