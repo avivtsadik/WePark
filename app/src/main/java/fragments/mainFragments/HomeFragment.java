@@ -22,6 +22,7 @@ import models.ParkingMock;
 
 public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -34,7 +35,10 @@ public class HomeFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.parkingList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ParkingListAdapter adapter = new ParkingListAdapter(getLayoutInflater(), ParkingMock.instance().getParkingLots());
+        ParkingListAdapter adapter = new ParkingListAdapter(
+                getLayoutInflater(),
+                ParkingMock.instance().getParkingLots(),
+                R.layout.parking_card);
         list.setAdapter(adapter);
 
         View addParkingBtn = view.findViewById(R.id.addParkingButton);

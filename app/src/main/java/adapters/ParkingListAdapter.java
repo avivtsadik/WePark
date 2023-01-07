@@ -58,8 +58,10 @@ public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> 
 
     LayoutInflater inflater;
     List<Parking> data;
+    int layout;
 
-    public ParkingListAdapter(LayoutInflater inflater, List<Parking> data) {
+    public ParkingListAdapter(LayoutInflater inflater, List<Parking> data, int layout) {
+        this.layout = layout;
         this.inflater = inflater;
         this.data = data;
     }
@@ -71,7 +73,7 @@ public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> 
     @NonNull
     @Override
     public ParkingListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.parking_card, parent, false);
+        View view = inflater.inflate(this.layout, parent, false);
         return new ParkingListHolder(view, listener, data);
     }
 
