@@ -17,14 +17,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wepark.R;
 
-import fragments.mainFragments.EditParkingFragment;
 import fragments.mainFragments.HomeFragment;
 import fragments.mainFragments.ManageFavoritesFragment;
 import fragments.mainFragments.MyPostsFragment;
 import fragments.mainFragments.ProfileFragment;
+import services.GoogleLoginService;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     private FirebaseAuth mAuth;
@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         logoutTextView.setOnClickListener(view -> {
             mAuth.signOut();
+            GoogleLoginService.instance().SignOutFromGoogle();
+
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
