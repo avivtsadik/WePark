@@ -13,10 +13,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.wepark.R;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import activities.MainActivity;
 import activities.OnFragmentInteractionListener;
+import services.GoogleLoginService;
 
 public class LoginFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -33,7 +38,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentActivity parentActivity = getActivity();
     }
 
     @Override
@@ -42,6 +46,8 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         Button signupBtn = view.findViewById(R.id.signupBtn);
+        SignInButton googleSignIn = view.findViewById(R.id.googleSignIn);
+
         signupBtn.setOnClickListener(view1 -> {
             mListener.loadFragment(new SignUpFragment());
         });
@@ -54,6 +60,11 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        GoogleLoginService.instance().SignInWithGoogle(getActivity());
+
+        googleSignIn.setOnClickListener(view1 -> {
+            this.SignInWithGoogle();
+        });
 
         return view;
     }
@@ -91,6 +102,28 @@ public class LoginFragment extends Fragment {
                             }
                         }
                     });
+        }
+    }
+
+    private void SignInWithGoogle() {
+        Intent intent = GoogleLoginService.instance().getSignInIntent();
+        startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            } catch (ApiException e) {
+                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
