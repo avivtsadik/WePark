@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.example.wepark.R;
 
+import java.util.List;
 import java.util.Vector;
 
 import adapters.ParkingListAdapter;
@@ -34,7 +35,7 @@ public class MyPostsFragment extends Fragment {
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         //TODO: change the data to the posts of the user
-        Vector<Parking> data = ParkingMock.instance().getParkingLots();
+        List<Parking> data = ParkingMock.instance().getParkingLots();
         ParkingListAdapter adapter = new ParkingListAdapter(getLayoutInflater(), data, R.layout.parking_card_editable);
         list.setAdapter(adapter);
 

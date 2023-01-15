@@ -36,7 +36,7 @@ class FavoriteListHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Favorite favorite, int pos) {
-        textView.setText(favorite.getCity() + "(" + favorite.getNeighborhood() + ")");
+        textView.setText(favorite.getCity());
     }
 }
 

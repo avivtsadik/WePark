@@ -21,20 +21,11 @@ public class FavoriteMock {
             "RISHON LETZION"
     };
 
-    public final String[] streets = new String[]{
-            "EVEN GVIROL",
-            "KEREN HAYESOD",
-            "ROTSHILD",
-            "MOSHE SHARET",
-            "YERIHO",
-            "DIZINGOF"
-    };
-
     private final Vector<Favorite> favorites = new Vector<>();
 
     public FavoriteMock() {
         for (int i = 0; i < 20; i++) {
-            this.addFavorite(new Favorite(cities[i % (cities.length)], streets[i % (streets.length)]));
+            this.addFavorite(new Favorite(cities[i % (cities.length)]));
         }
     }
 

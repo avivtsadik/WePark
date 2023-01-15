@@ -1,10 +1,10 @@
 package models;
 
-import android.widget.Toast;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+
+import room.AppLocalDb;
+import room.AppLocalDbRepository;
 
 public class ParkingMock {
     public static final ParkingMock _instance = new ParkingMock();
@@ -13,11 +13,11 @@ public class ParkingMock {
         return _instance;
     }
 
-    private final Vector<Parking> parkingLots = new Vector<>();
+    private final List<Parking> parkingLots = new Vector<>();
 
     private ParkingMock() {
         for (int i = 0; i < 20; i++) {
-            this.addParkingLot(new Parking(i, "city " + i, "street " + i, ParkingSize.BIG));
+            this.addParkingLot(new Parking(i, "city " + i, ParkingSize.BIG));
         }
     }
 
@@ -28,8 +28,8 @@ public class ParkingMock {
     public void deleteParkingLot() {
 
     }
-
-    public Vector<Parking> getParkingLots() {
-        return this.parkingLots;
+    AppLocalDbRepository localDb = AppLocalDb.getAppDb;
+    public List<Parking> getParkingLots() {
+        return localDb.parkingDao().getAll();
     }
 }

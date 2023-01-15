@@ -20,7 +20,6 @@ import models.ParkingSize;
 
 class ParkingListHolder extends RecyclerView.ViewHolder {
     TextView cityTv;
-    TextView streetTv;
     TextView sizeTv;
     AppCompatImageView editPostButton;
     AppCompatImageView deletePostButton;
@@ -30,7 +29,6 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.data = data;
         cityTv = itemView.findViewById(R.id.cityTextView);
-        streetTv = itemView.findViewById(R.id.streetTextView);
         sizeTv = itemView.findViewById(R.id.sizeTextView);
         editPostButton = itemView.findViewById(R.id.editPostButton);
         deletePostButton = itemView.findViewById(R.id.deletePostButton);
@@ -51,7 +49,6 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
 
     public void bind(Parking parking, int pos) {
         cityTv.setText(parking.getCity());
-        streetTv.setText(parking.getStreet());
         sizeTv.setText(this.getParkingSizeText(parking.getSize()));
     }
 

@@ -1,15 +1,20 @@
 package models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Parking {
+    @PrimaryKey
+    @NonNull
     private int id;
     private String city;
-    private String street;
     private ParkingSize size;
 
-    public Parking(int id, String city, String street, ParkingSize size) {
+    public Parking(int id, String city, ParkingSize size) {
         this.id = id;
         this.city = city;
-        this.street = street;
         this.size = size;
     }
 
@@ -27,14 +32,6 @@ public class Parking {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
     }
 
     public ParkingSize getSize() {
