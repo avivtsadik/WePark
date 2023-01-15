@@ -9,18 +9,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.wepark.R;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 import adapters.ParkingListAdapter;
 import models.Parking;
 import models.ParkingMock;
 
 public class MyPostsFragment extends Fragment {
+    private List<Parking> parkingList = new LinkedList<>();
+    private ParkingListAdapter adapter;
+    private FirebaseAuth mAuth;
+
     public MyPostsFragment() {
         // Required empty public constructor
     }
@@ -30,13 +34,17 @@ public class MyPostsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_posts, container, false);
+        mAuth = FirebaseAuth.getInstance();
+
+        ParkingMock.instance().getParkingLotsByUserId(mAuth.getUid(), (prkList) -> {
+            parkingList = prkList;
+            adapter.setData(parkingList);
+        });
 
         RecyclerView list = view.findViewById(R.id.myPostsList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //TODO: change the data to the posts of the user
-        List<Parking> data = ParkingMock.instance().getParkingLots();
-        ParkingListAdapter adapter = new ParkingListAdapter(getLayoutInflater(), data, R.layout.parking_card_editable);
+        adapter = new ParkingListAdapter(getLayoutInflater(), parkingList, R.layout.parking_card_editable);
         list.setAdapter(adapter);
 
         return view;

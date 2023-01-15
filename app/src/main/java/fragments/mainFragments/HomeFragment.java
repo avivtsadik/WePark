@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,14 +13,18 @@ import android.view.ViewGroup;
 
 import com.example.wepark.R;
 
-import activities.MainActivity;
+import java.util.LinkedList;
+import java.util.List;
+
 import activities.OnFragmentInteractionListener;
 import adapters.ParkingListAdapter;
-import fragments.loginFragments.LoginFragment;
+import models.Parking;
 import models.ParkingMock;
 
 public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+    private List<Parking> parkingLots = new LinkedList<>();
+    ParkingListAdapter adapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -32,13 +35,16 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
+        ParkingMock.instance().getAllParkingLots((prkList) -> {
+            parkingLots = prkList;
+            adapter.setData(parkingLots);
+        });
+
         RecyclerView list = view.findViewById(R.id.parkingList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ParkingListAdapter adapter = new ParkingListAdapter(
-                getLayoutInflater(),
-                ParkingMock.instance().getParkingLots(),
-                R.layout.parking_card);
+        adapter = new ParkingListAdapter(getLayoutInflater(), parkingLots, R.layout.parking_card);
         list.setAdapter(adapter);
 
         View addParkingBtn = view.findViewById(R.id.addParkingButton);
@@ -61,6 +67,15 @@ public class HomeFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ParkingMock.instance().getAllParkingLots((prkList) -> {
+            parkingLots = prkList;
+            adapter.setData(parkingLots);
+        });
     }
 
     @Override

@@ -83,6 +83,11 @@ public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> 
         this.data = data;
     }
 
+    public void setData(List<Parking> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }

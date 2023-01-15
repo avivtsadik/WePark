@@ -183,7 +183,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
-                android:id="@+id/cancelbtn"
+                android:id="@+id/addParkingButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/red"

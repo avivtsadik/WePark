@@ -13,6 +13,7 @@ import room.AppLocalDb;
 public class WeParkApplication extends Application {
     ExecutorService executorService = Executors.newFixedThreadPool(4);
     private static Context context;
+
     public void onCreate() {
         super.onCreate();
         WeParkApplication.context = getApplicationContext();
