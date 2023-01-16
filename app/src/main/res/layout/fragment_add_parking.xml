@@ -66,44 +66,6 @@
                             android:layout_weight="0.3" />
 
                         <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Street:"
-                            android:textColor="@android:color/black"
-                            android:textSize="20dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="0.3" />
-
-                        <Spinner
-                            android:id="@+id/streetspinner"
-                            android:layout_width="212dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/rounded_white_backgound" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="0.3" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.1"
-                        android:gravity="center">
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="0.3" />
-
-                        <TextView
                             android:id="@+id/textView7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -122,6 +84,7 @@
                             android:id="@+id/sizespinner"
                             android:layout_width="212dp"
                             android:layout_height="36dp"
+                            android:spinnerMode="dropdown"
                             android:background="@drawable/rounded_white_backgound" />
 
                         <View
@@ -221,7 +184,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
-                android:id="@+id/cancelbtn"
+                android:id="@+id/addParkingButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/red"

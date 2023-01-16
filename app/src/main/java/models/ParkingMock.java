@@ -1,35 +1,71 @@
 package models;
 
-import android.widget.Toast;
+import android.os.Handler;
+import android.os.Looper;
 
-import java.util.HashMap;
+import androidx.core.os.HandlerCompat;
+
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+
+import models.Interfaces.AddParkingListener;
+import models.Interfaces.DeleteParkingListener;
+import models.Interfaces.GetAllParkingListener;
+import models.Interfaces.GetParkingLotsByUserIdListener;
+import room.AppLocalDb;
+import room.AppLocalDbRepository;
 
 public class ParkingMock {
     public static final ParkingMock _instance = new ParkingMock();
+    private Executor executor = Executors.newSingleThreadExecutor();
+    private Handler mainHandler = HandlerCompat.createAsync(Looper.getMainLooper());
+    private AppLocalDbRepository localDb = AppLocalDb.getAppDb;
 
     public static ParkingMock instance() {
         return _instance;
     }
 
-    private final Vector<Parking> parkingLots = new Vector<>();
-
     private ParkingMock() {
-        for (int i = 0; i < 20; i++) {
-            this.addParkingLot(new Parking(i, "city " + i, "street " + i, ParkingSize.BIG));
-        }
-    }
-
-    private void addParkingLot(Parking parking) {
-        this.parkingLots.add(parking);
-    }
-
-    public void deleteParkingLot() {
 
     }
 
-    public Vector<Parking> getParkingLots() {
-        return this.parkingLots;
+    public void getAllParkingLots(GetAllParkingListener listener) {
+        executor.execute(() -> {
+            List<Parking> data = localDb.parkingDao().getAll();
+            mainHandler.post(() -> {
+                listener.onComplete(data);
+            });
+        });
     }
+
+    public void addParkingLot(Parking newParking, AddParkingListener listener) {
+        executor.execute(() -> {
+            localDb.parkingDao().insertAll(newParking);
+            mainHandler.post(() -> {
+                listener.onComplete();
+            });
+        });
+    }
+
+    public void getParkingLotsByUserId(String userId, GetParkingLotsByUserIdListener listener) {
+        executor.execute(() -> {
+            List<Parking> data = localDb.parkingDao().getAll(); // TODO: filter by ID;
+            mainHandler.post(() -> {
+                listener.onComplete(data);
+            });
+        });
+    }
+
+    public void deleteParkingLot(Parking parking, DeleteParkingListener listener) {
+        executor.execute(() -> {
+            localDb.parkingDao().delete(parking);
+            mainHandler.post(() -> {
+                listener.onComplete();
+            });
+        });
+    }
+
 }

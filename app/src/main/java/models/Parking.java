@@ -1,24 +1,41 @@
 package models;
 
-public class Parking {
-    private int id;
-    private String city;
-    private String street;
-    private ParkingSize size;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public Parking(int id, String city, String street, ParkingSize size) {
+import com.example.wepark.R;
+
+@Entity
+public class Parking {
+    @PrimaryKey
+    @NonNull
+    private String id;
+    private String userId;
+    private String city;
+    private String size;
+
+    public Parking(String id, String userId, String city, String size) {
         this.id = id;
+        this.userId = userId;
         this.city = city;
-        this.street = street;
         this.size = size;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getCity() {
@@ -29,19 +46,11 @@ public class Parking {
         this.city = city;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public ParkingSize getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(ParkingSize size) {
+    public void setSize(String size) {
         this.size = size;
     }
 }

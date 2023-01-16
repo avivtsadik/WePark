@@ -13,10 +13,15 @@
     <string name="add_parking">Add Parking</string>
     <string name="already_have_an_account_log_in"><u>Already have an account? Log in</u></string>
     <string name="forgot_password"><u>Forgot password?</u></string>
-    <string-array name="city">
+    <string-array name="Cities"> <!-- TODO: add more cities / make api to get cities -->
         <item>Tel aviv</item>
         <item>Shoham</item>
         <item>Rishon letzion</item>
         <item>Holon</item>
+    </string-array>
+    <string-array name="ParkingSize">
+        <item>Big</item>
+        <item>Medium</item>
+        <item>Small</item>
     </string-array>
 </resources>
