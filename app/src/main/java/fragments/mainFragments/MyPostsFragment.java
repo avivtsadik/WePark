@@ -19,11 +19,11 @@ import java.util.List;
 import adapters.ParkingListAdapter;
 import models.Parking;
 import models.ParkingMock;
+import services.LoginService;
 
 public class MyPostsFragment extends Fragment {
     private List<Parking> parkingList = new LinkedList<>();
     private ParkingListAdapter adapter;
-    private FirebaseAuth mAuth;
 
     public MyPostsFragment() {
         // Required empty public constructor
@@ -33,9 +33,9 @@ public class MyPostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_posts, container, false);
-        mAuth = FirebaseAuth.getInstance();
+        String userId = LoginService.instance().getLoginService().getUserId();
 
-        ParkingMock.instance().getParkingLotsByUserId(mAuth.getUid(), (prkList) -> {
+        ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
             parkingList = prkList;
             adapter.setData(parkingList);
         });
@@ -47,14 +47,14 @@ public class MyPostsFragment extends Fragment {
         adapter = new ParkingListAdapter(getLayoutInflater(), parkingList, R.layout.parking_card_editable);
 
         adapter.setOnItemEditListener(() -> {
-            ParkingMock.instance().getParkingLotsByUserId(mAuth.getUid(), (prkList) -> {
+            ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
                 parkingList = prkList;
                 adapter.setData(parkingList);
             });
         });
 
         adapter.setOnItemDeleteListener(() -> {
-            ParkingMock.instance().getParkingLotsByUserId(mAuth.getUid(), (prkList) -> {
+            ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
                 parkingList = prkList;
                 adapter.setData(parkingList);
             });
