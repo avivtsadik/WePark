@@ -9,7 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-public class GoogleLoginService {
+public class GoogleLoginService extends AbstractLoginService {
     public static final GoogleLoginService _instance = new GoogleLoginService();
     public static GoogleLoginService instance() {
         return _instance;
@@ -17,8 +17,13 @@ public class GoogleLoginService {
 
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
+    private Activity currentActivity;
 
-    public void SignInWithGoogle(Activity activity) {
+    private GoogleLoginService() {
+    }
+
+    public void signIn(Activity activity) {
+        currentActivity = activity;
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -27,10 +32,11 @@ public class GoogleLoginService {
     }
 
     public GoogleSignInAccount getGoogleAccount(Activity activity) {
+        this.currentActivity = activity;
         return GoogleSignIn.getLastSignedInAccount(activity);
     }
 
-    public void SignOutFromGoogle() {
+    public void signOut() {
         gsc.signOut();
     }
 
@@ -38,4 +44,18 @@ public class GoogleLoginService {
         return gsc.getSignInIntent();
     }
 
+    @Override
+    public String getUserId() {
+        return GoogleSignIn.getLastSignedInAccount(this.currentActivity).getId();
+    }
+
+    @Override
+    public String getUserName() {
+        return GoogleSignIn.getLastSignedInAccount(this.currentActivity).getDisplayName();
+    }
+
+    @Override
+    public String getUserEmail() {
+        return GoogleSignIn.getLastSignedInAccount(this.currentActivity).getEmail();
+    }
 }
