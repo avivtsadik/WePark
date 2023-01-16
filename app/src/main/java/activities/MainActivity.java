@@ -3,6 +3,7 @@ package activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,10 +42,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
-        userName = findViewById(R.id.userName);
-        userEmail = findViewById(R.id.userEmail);
+        View navigationHeader = navigationView.getHeaderView(0);
+        userName = navigationHeader.findViewById(R.id.userName);
+        userEmail = navigationHeader.findViewById(R.id.userEmail);
 
-//        userName.setText(LoginService.instance().getLoginService().getUserName());
+        userName.setText(LoginService.instance().getLoginService().getUserName());
+        userEmail.setText(LoginService.instance().getLoginService().getUserEmail());
 
         setSupportActionBar(toolbar);
 
