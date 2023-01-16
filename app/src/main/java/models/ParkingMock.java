@@ -6,9 +6,9 @@ import android.os.Looper;
 import androidx.core.os.HandlerCompat;
 
 import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 
 import models.Interfaces.AddParkingListener;
@@ -52,7 +52,7 @@ public class ParkingMock {
 
     public void getParkingLotsByUserId(String userId, GetParkingLotsByUserIdListener listener) {
         executor.execute(() -> {
-            List<Parking> data = localDb.parkingDao().getAll(); // TODO: filter by ID;
+            List<Parking> data = localDb.parkingDao().getAll().stream().filter((parking) -> parking.getUserId().equals(userId)).collect(Collectors.toList());
             mainHandler.post(() -> {
                 listener.onComplete(data);
             });

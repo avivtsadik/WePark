@@ -15,11 +15,11 @@ import java.util.List;
 
 import models.Parking;
 import models.ParkingMock;
-import models.ParkingSize;
 
 class ParkingListHolder extends RecyclerView.ViewHolder {
     TextView cityTv;
     TextView sizeTv;
+    TextView userIdTv;
     AppCompatImageView editPostButton;
     AppCompatImageView deletePostButton;
     List<Parking> data;
@@ -31,11 +31,13 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
         sizeTv = itemView.findViewById(R.id.sizeTextView);
         editPostButton = itemView.findViewById(R.id.editPostButton);
         deletePostButton = itemView.findViewById(R.id.deletePostButton);
+        userIdTv = itemView.findViewById(R.id.userIdTextView);
     }
 
     public void bind(Parking parking, ParkingListAdapter.OnItemEditListener editListener, ParkingListAdapter.OnItemDeleteListener deleteListener) {
         cityTv.setText(parking.getCity());
         sizeTv.setText(parking.getSize());
+        userIdTv.setText(parking.getUserId());
 
         if (editPostButton != null) {
             editPostButton.setOnClickListener(view -> {

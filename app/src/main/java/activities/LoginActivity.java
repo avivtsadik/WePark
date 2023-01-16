@@ -15,27 +15,34 @@ import com.google.firebase.auth.FirebaseUser;
 
 import fragments.loginFragments.LoginFragment;
 import services.GoogleLoginService;
+import services.LoginService;
+import services.WeParkLoginService;
 
 public class LoginActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-    private FirebaseAuth mAuth;
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        FirebaseUser weParkUser = WeParkLoginService.instance().getWeParkUser();
         GoogleSignInAccount googleUser = GoogleLoginService.instance().getGoogleAccount(this);
 
-        if(firebaseUser != null || googleUser != null){
+        if (weParkUser != null || googleUser != null) {
+            if (weParkUser != null) {
+                LoginService.instance().setLoginService(WeParkLoginService.instance());
+            } else {
+                LoginService.instance().setLoginService(GoogleLoginService.instance());
+            }
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             LoginActivity.this.finish();
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
+        WeParkLoginService.instance().setFirebaseInstance(FirebaseAuth.getInstance());
         setContentView(R.layout.activity_login);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameContainer, new LoginFragment(), "LOGIN_FRAGMENT");

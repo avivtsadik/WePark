@@ -30,6 +30,8 @@ import com.google.firebase.auth.FirebaseUser;
 import activities.MainActivity;
 import activities.OnFragmentInteractionListener;
 import services.GoogleLoginService;
+import services.LoginService;
+import services.WeParkLoginService;
 
 public class LoginFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -60,7 +62,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        GoogleLoginService.instance().SignInWithGoogle(getActivity());
+        GoogleLoginService.instance().signIn(getActivity());
 
         googleSignIn.setOnClickListener(view1 -> {
             this.SignInWithGoogle();
@@ -91,6 +93,7 @@ public class LoginFragment extends Fragment {
                                 Log.d("TAG", "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 Log.d("TAG", "user: " + user);
+                                LoginService.instance().setLoginService(WeParkLoginService.instance());
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                                 getActivity().finish();
@@ -118,6 +121,7 @@ public class LoginFragment extends Fragment {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 task.getResult(ApiException.class);
+                LoginService.instance().setLoginService(GoogleLoginService.instance());
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();

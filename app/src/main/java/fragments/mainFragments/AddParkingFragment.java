@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import models.Parking;
 import models.ParkingMock;
-import models.ParkingSize;
+import services.LoginService;
 
 public class AddParkingFragment extends Fragment {
     private Button addParkingButton;
@@ -52,7 +52,7 @@ public class AddParkingFragment extends Fragment {
         addParkingButton.setOnClickListener(view1 -> {
             try {
                 String id = UUID.randomUUID().toString();
-                String userId = FirebaseAuth.getInstance().getUid();
+                String userId = LoginService.instance().getLoginService().getUserId();
                 String size = sizeSpinner.getSelectedItem().toString();
                 String city = citySpinner.getSelectedItem().toString();
 

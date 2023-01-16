@@ -3,6 +3,7 @@ package activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,27 +22,32 @@ import fragments.mainFragments.HomeFragment;
 import fragments.mainFragments.ManageFavoritesFragment;
 import fragments.mainFragments.MyPostsFragment;
 import fragments.mainFragments.ProfileFragment;
-import services.GoogleLoginService;
+import services.LoginService;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-    private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
     TextView logoutTextView;
+    TextView userName;
+    TextView userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance();
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
+        View navigationHeader = navigationView.getHeaderView(0);
+        userName = navigationHeader.findViewById(R.id.userName);
+        userEmail = navigationHeader.findViewById(R.id.userEmail);
+
+        userName.setText(LoginService.instance().getLoginService().getUserName());
+        userEmail.setText(LoginService.instance().getLoginService().getUserEmail());
 
         setSupportActionBar(toolbar);
 
@@ -90,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         logoutTextView = findViewById(R.id.logoutBtn);
 
         logoutTextView.setOnClickListener(view -> {
-            mAuth.signOut();
-            GoogleLoginService.instance().SignOutFromGoogle();
+            LoginService.instance().getLoginService().signOut();
 
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
