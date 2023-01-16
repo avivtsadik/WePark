@@ -23,7 +23,7 @@ public class ParkingMock {
     private Executor executor = Executors.newSingleThreadExecutor();
     private Handler mainHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     private AppLocalDbRepository localDb = AppLocalDb.getAppDb;
-
+    private FirebaseModel firebaseModel = new FirebaseModel();
     public static ParkingMock instance() {
         return _instance;
     }
@@ -33,21 +33,23 @@ public class ParkingMock {
     }
 
     public void getAllParkingLots(GetAllParkingListener listener) {
-        executor.execute(() -> {
-            List<Parking> data = localDb.parkingDao().getAll();
-            mainHandler.post(() -> {
-                listener.onComplete(data);
-            });
-        });
+        firebaseModel.getAllParkingLots(listener);
+////        executor.execute(() -> {
+////            List<Parking> data = localDb.parkingDao().getAll();
+////            mainHandler.post(() -> {
+//                listener.onComplete(data);
+//            });
+//        });
     }
 
     public void addParkingLot(Parking newParking, AddParkingListener listener) {
-        executor.execute(() -> {
-            localDb.parkingDao().insertAll(newParking);
-            mainHandler.post(() -> {
-                listener.onComplete();
-            });
-        });
+        firebaseModel.addParkingLot(newParking,listener);
+//        executor.execute(() -> {
+//            localDb.parkingDao().insertAll(newParking);
+//            mainHandler.post(() -> {
+//                listener.onComplete();
+//            });
+//        });
     }
 
     public void getParkingLotsByUserId(String userId, GetParkingLotsByUserIdListener listener) {
