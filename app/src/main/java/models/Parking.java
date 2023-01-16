@@ -4,27 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.wepark.R;
+
 @Entity
 public class Parking {
     @PrimaryKey
     @NonNull
-    private int id;
+    private String id;
     private String userId;
     private String city;
-    private ParkingSize size;
+    private String size;
 
-    public Parking(int id, String userId, String city, ParkingSize size) {
+    public Parking(String id, String userId, String city, String size) {
         this.id = id;
         this.userId = userId;
         this.city = city;
         this.size = size;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -44,11 +46,11 @@ public class Parking {
         this.city = city;
     }
 
-    public ParkingSize getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(ParkingSize size) {
+    public void setSize(String size) {
         this.size = size;
     }
 }

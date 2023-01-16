@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -25,52 +24,43 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
     AppCompatImageView deletePostButton;
     List<Parking> data;
 
-    public ParkingListHolder(@NonNull View itemView, ParkingListAdapter.OnItemClickListener listener, List<Parking> data) {
+    public ParkingListHolder(@NonNull View itemView, ParkingListAdapter.OnItemEditListener listener, List<Parking> data) {
         super(itemView);
         this.data = data;
         cityTv = itemView.findViewById(R.id.cityTextView);
         sizeTv = itemView.findViewById(R.id.sizeTextView);
         editPostButton = itemView.findViewById(R.id.editPostButton);
         deletePostButton = itemView.findViewById(R.id.deletePostButton);
+    }
+
+    public void bind(Parking parking, ParkingListAdapter.OnItemEditListener editListener, ParkingListAdapter.OnItemDeleteListener deleteListener) {
+        cityTv.setText(parking.getCity());
+        sizeTv.setText(parking.getSize());
 
         if (editPostButton != null) {
             editPostButton.setOnClickListener(view -> {
-                itemView.getContext();
+                ParkingMock.instance().addParkingLot(parking, editListener::onItemEdited);
             });
         }
 
         if (deletePostButton != null) {
             deletePostButton.setOnClickListener(view -> {
-
+                ParkingMock.instance().deleteParkingLot(parking, deleteListener::onItemDeleted);
             });
-        }
-
-    }
-
-    public void bind(Parking parking, int pos) {
-        cityTv.setText(parking.getCity());
-        sizeTv.setText(this.getParkingSizeText(parking.getSize()));
-    }
-
-    private String getParkingSizeText(ParkingSize parkingSize) {
-        switch (parkingSize) {
-            case BIG:
-                return "Big";
-            case MEDIUM:
-                return "Medium";
-            case SMALL:
-                return "Small";
-            default:
-                return "";
         }
     }
 }
 
 public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> {
-    OnItemClickListener listener;
+    OnItemEditListener editListener;
+    OnItemDeleteListener deleteListener;
 
-    public static interface OnItemClickListener {
-        void onItemClick(int pos);
+    public static interface OnItemEditListener {
+        void onItemEdited();
+    }
+
+    public static interface OnItemDeleteListener {
+        void onItemDeleted();
     }
 
     LayoutInflater inflater;
@@ -88,21 +78,25 @@ public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> 
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
+    public void setOnItemEditListener(OnItemEditListener listener) {
+        this.editListener = listener;
+    }
+
+    public void setOnItemDeleteListener(OnItemDeleteListener listener) {
+        this.deleteListener = listener;
     }
 
     @NonNull
     @Override
     public ParkingListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(this.layout, parent, false);
-        return new ParkingListHolder(view, listener, data);
+        return new ParkingListHolder(view, editListener, data);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ParkingListHolder holder, int position) {
         Parking parking = data.get(position);
-        holder.bind(parking, position);
+        holder.bind(parking, editListener, deleteListener);
     }
 
     @Override

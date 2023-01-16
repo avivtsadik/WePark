@@ -23,7 +23,7 @@ public class EditParkingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_parking, container, false);
 
         Spinner spinnerLanguages= view.findViewById(R.id.cityspinner);
-        ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(view.getContext(), R.array.city, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(view.getContext(), R.array.Cities, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerLanguages.setAdapter(adapter);
 

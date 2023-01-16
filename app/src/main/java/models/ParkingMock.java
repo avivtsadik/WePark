@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 
 
 import models.Interfaces.AddParkingListener;
+import models.Interfaces.DeleteParkingListener;
 import models.Interfaces.GetAllParkingListener;
 import models.Interfaces.GetParkingLotsByUserIdListener;
 import room.AppLocalDb;
@@ -26,8 +27,6 @@ public class ParkingMock {
     public static ParkingMock instance() {
         return _instance;
     }
-
-    private final List<Parking> parkingLots = new Vector<>();
 
     private ParkingMock() {
 
@@ -60,8 +59,13 @@ public class ParkingMock {
         });
     }
 
-    public void deleteParkingLot() {
-
+    public void deleteParkingLot(Parking parking, DeleteParkingListener listener) {
+        executor.execute(() -> {
+            localDb.parkingDao().delete(parking);
+            mainHandler.post(() -> {
+                listener.onComplete();
+            });
+        });
     }
 
 }

@@ -84,6 +84,7 @@
                             android:id="@+id/sizespinner"
                             android:layout_width="212dp"
                             android:layout_height="36dp"
+                            android:spinnerMode="dropdown"
                             android:background="@drawable/rounded_white_backgound" />
 
                         <View

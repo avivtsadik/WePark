@@ -32,7 +32,6 @@ public class MyPostsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_posts, container, false);
         mAuth = FirebaseAuth.getInstance();
 
@@ -44,7 +43,23 @@ public class MyPostsFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.myPostsList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         adapter = new ParkingListAdapter(getLayoutInflater(), parkingList, R.layout.parking_card_editable);
+
+        adapter.setOnItemEditListener(() -> {
+            ParkingMock.instance().getParkingLotsByUserId(mAuth.getUid(), (prkList) -> {
+                parkingList = prkList;
+                adapter.setData(parkingList);
+            });
+        });
+
+        adapter.setOnItemDeleteListener(() -> {
+            ParkingMock.instance().getParkingLotsByUserId(mAuth.getUid(), (prkList) -> {
+                parkingList = prkList;
+                adapter.setData(parkingList);
+            });
+        });
+
         list.setAdapter(adapter);
 
         return view;

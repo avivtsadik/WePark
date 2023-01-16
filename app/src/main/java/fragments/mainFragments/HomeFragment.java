@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.wepark.R;
 
@@ -27,14 +28,12 @@ public class HomeFragment extends Fragment {
     ParkingListAdapter adapter;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
 
         ParkingMock.instance().getAllParkingLots((prkList) -> {
             parkingLots = prkList;
@@ -47,14 +46,15 @@ public class HomeFragment extends Fragment {
         adapter = new ParkingListAdapter(getLayoutInflater(), parkingLots, R.layout.parking_card);
         list.setAdapter(adapter);
 
-        View addParkingBtn = view.findViewById(R.id.addParkingButton);
+        Button addParkingBtn = view.findViewById(R.id.addParkingButton);
+
         addParkingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.loadFragment(new AddParkingFragment());
             }
         });
-        // Inflate the layout for this fragment
+
         return view;
     }
 
