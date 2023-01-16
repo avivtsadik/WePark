@@ -35,7 +35,6 @@ import services.WeParkLoginService;
 
 public class LoginFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,8 +71,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void loginUser(View view) {
-        EditText emailObj = (EditText) view.findViewById(R.id.editTextLoginEmailAddress);
-        EditText passwordObj = (EditText) view.findViewById(R.id.editTextLoginPassword);
+        EditText emailObj = view.findViewById(R.id.editTextLoginEmailAddress);
+        EditText passwordObj = view.findViewById(R.id.editTextLoginPassword);
         String email = emailObj.getText().toString();
         String password = passwordObj.getText().toString();
         if (TextUtils.isEmpty(email)) {
@@ -83,28 +82,20 @@ public class LoginFragment extends Fragment {
             passwordObj.setError("Password cannot be empty");
             passwordObj.requestFocus();
         } else {
-            mAuth = FirebaseAuth.getInstance();
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("TAG", "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Log.d("TAG", "user: " + user);
-                                LoginService.instance().setLoginService(WeParkLoginService.instance());
-                                Intent intent = new Intent(getActivity(), MainActivity.class);
-                                startActivity(intent);
-                                getActivity().finish();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("TAG", "signInWithEmail:failure", task.getException());
-                                Toast.makeText(view.getContext(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+            WeParkLoginService.instance().signIn(email, password, new WeParkLoginService.SigningListener() {
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+
+                @Override
+                public void onFailed() {
+                    Toast.makeText(view.getContext(), "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
