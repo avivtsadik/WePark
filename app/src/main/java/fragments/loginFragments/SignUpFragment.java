@@ -1,6 +1,7 @@
 package fragments.loginFragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,11 +24,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import activities.MainActivity;
 import activities.OnFragmentInteractionListener;
+import services.WeParkLoginService;
 
 public class SignUpFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,6 @@ public class SignUpFragment extends Fragment {
             throw new ClassCastException(activity
                     + " must implement OnFragmentInteractionListener");
         }
-        FragmentActivity parentActivity = getActivity();
     }
 
     @Override
@@ -75,28 +76,20 @@ public class SignUpFragment extends Fragment {
             passwordObj.setError("Password should be at least 6 characters");
             passwordObj.requestFocus();
         } else {
-            mAuth = FirebaseAuth.getInstance();
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("TAG", "createUserWithEmail:success");
-                                Toast.makeText(view.getContext(), "Signup success",
-                                        Toast.LENGTH_SHORT).show();
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Log.d("TAG", "user: " + user);
-                                mListener.loadFragment(new LoginFragment());
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.d("TAG", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(view.getContext(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                Log.d("TAG", "Failed: ");
-                            }
-                        }
-                    });
+            WeParkLoginService.instance().signUp(email, password, new WeParkLoginService.SigningListener() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(view.getContext(), "Signup success",
+                            Toast.LENGTH_SHORT).show();
+                    mListener.loadFragment(new LoginFragment());
+                }
+
+                @Override
+                public void onFailed() {
+                    Toast.makeText(view.getContext(), "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
