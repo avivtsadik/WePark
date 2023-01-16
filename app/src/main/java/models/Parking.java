@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey;
 
 import com.example.wepark.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity
 public class Parking {
     @PrimaryKey
@@ -20,6 +23,24 @@ public class Parking {
         this.userId = userId;
         this.city = city;
         this.size = size;
+    }
+
+    public static  Parking fromJson(Map<String,Object> json){
+        String id = (String)json.get("id");
+        String city = (String)json.get("city");
+        String size = (String)json.get("size");
+        String userId = (String)json.get("userId");
+        Parking pr = new Parking(id,userId,city,size);
+        return pr;
+    }
+
+    public Map<String,Object> toJson(){
+        Map<String, Object> json = new HashMap<>();
+        json.put("id", getId());
+        json.put("city", getCity());
+        json.put("size", getSize());
+        json.put("userId", getUserId());
+        return json;
     }
 
     public String getId() {
