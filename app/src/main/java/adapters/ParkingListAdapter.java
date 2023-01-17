@@ -41,7 +41,7 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
 
         if (editPostButton != null) {
             editPostButton.setOnClickListener(view -> {
-                ParkingMock.instance().addParkingLot(parking, editListener::onItemEdited);
+
             });
         }
 
