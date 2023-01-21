@@ -2,7 +2,6 @@ package activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -25,14 +24,7 @@ import fragments.mainFragments.MyPostsFragment;
 import fragments.mainFragments.ProfileFragment;
 import services.LoginService;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     DrawerLayout drawerLayout;
@@ -65,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         drawerLayout.addDrawerListener(toggle);
 
         toggle.syncState();
-
-        loadFragment(new HomeFragment());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -126,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        ft.replace(R.id.container, fragment);
+        ft.replace(R.id.main_navhost, fragment);
         ft.commit();
     }
 }

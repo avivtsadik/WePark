@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragmentNav">
+
+    <fragment
+        android:id="@+id/homeFragmentNav"
+        android:name="fragments.mainFragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragmentNav_to_addParkingFragmentNav"
+            app:destination="@id/addParkingFragmentNav" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageFavoritesFragmentNav"
+        android:name="fragments.mainFragments.ManageFavoritesFragment"
+        android:label="fragment_manage_favorites"
+        tools:layout="@layout/fragment_manage_favorites" />
+    <fragment
+        android:id="@+id/profileFragmentNav"
+        android:name="fragments.mainFragments.ProfileFragment"
+        android:label="fragment_edit_parking"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/addParkingFragmentNav"
+        android:name="fragments.mainFragments.AddParkingFragment"
+        android:label="fragment_add_parking"
+        tools:layout="@layout/fragment_add_parking" >
+        <action
+            android:id="@+id/action_addParkingFragmentNav_to_homeFragmentNav"
+            app:destination="@id/homeFragmentNav" />
+    </fragment>
+</navigation>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="fragments.mainFragments.ProfileFragment">
+    tools:context="fragments.mainFragments.AddParkingFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -49,10 +49,10 @@
                 card_view:cardElevation="5dp">
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -84,8 +84,8 @@
                             android:id="@+id/sizespinner"
                             android:layout_width="212dp"
                             android:layout_height="36dp"
-                            android:spinnerMode="dropdown"
-                            android:background="@drawable/rounded_white_backgound" />
+                            android:background="@drawable/rounded_white_backgound"
+                            android:spinnerMode="dropdown" />
 
                         <View
                             android:layout_width="0dp"
@@ -192,4 +192,4 @@
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+</LinearLayout>
