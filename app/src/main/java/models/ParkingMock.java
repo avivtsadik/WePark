@@ -1,5 +1,6 @@
 package models;
 
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -20,13 +21,15 @@ import room.AppLocalDbRepository;
 
 public class ParkingMock {
     public static final ParkingMock _instance = new ParkingMock();
+
+    public static ParkingMock instance() {
+        return _instance;
+    }
+
     private Executor executor = Executors.newSingleThreadExecutor();
     private Handler mainHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     private AppLocalDbRepository localDb = AppLocalDb.getAppDb;
     private FirebaseModel firebaseModel = new FirebaseModel();
-    public static ParkingMock instance() {
-        return _instance;
-    }
 
     private ParkingMock() {
 
@@ -43,13 +46,17 @@ public class ParkingMock {
     }
 
     public void addParkingLot(Parking newParking, AddParkingListener listener) {
-        firebaseModel.addParkingLot(newParking,listener);
+        firebaseModel.addParkingLot(newParking, listener);
 //        executor.execute(() -> {
 //            localDb.parkingDao().insertAll(newParking);
 //            mainHandler.post(() -> {
 //                listener.onComplete();
 //            });
 //        });
+    }
+
+    public void uploadParkingLotImage(Bitmap bitmap, String parkingId, FirebaseModel.UploadImageListener listener) {
+        firebaseModel.uploadImage(bitmap, parkingId, listener);
     }
 
     public void getParkingLotsByUserId(String userId, GetParkingLotsByUserIdListener listener) {

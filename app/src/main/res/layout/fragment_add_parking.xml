@@ -148,7 +148,7 @@
                             android:layout_weight="0.3" />
 
                         <Button
-                            android:id="@+id/button3"
+                            android:id="@+id/addImageButton"
                             android:layout_width="168dp"
                             android:layout_height="43dp"
                             android:background="@drawable/rounded_backgound_primary"
@@ -161,12 +161,12 @@
                             android:layout_weight="0.3" />
 
                         <Button
-                            android:id="@+id/button4"
+                            android:id="@+id/removeImageButton"
                             android:layout_width="147dp"
                             android:layout_height="43dp"
                             android:background="@drawable/rounded_white_backgound"
                             android:text="Remove Picture"
-                            android:textColor="@color/grey" />
+                            android:textColor="@color/primary" />
 
                         <View
                             android:layout_width="0dp"
@@ -187,7 +187,7 @@
                 android:id="@+id/addParkingButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/red"
+                android:background="@color/primary"
                 android:text="Share!"
                 android:textColor="@android:color/white" />
         </LinearLayout>

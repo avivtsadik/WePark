@@ -31,6 +31,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -52,6 +56,8 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:20.4.0'
+
+    implementation 'com.google.firebase:firebase-storage'
 
     def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
