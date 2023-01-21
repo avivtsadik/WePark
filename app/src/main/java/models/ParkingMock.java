@@ -9,12 +9,10 @@ import androidx.core.os.HandlerCompat;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 
-import models.Interfaces.AddParkingListener;
 import models.Interfaces.DeleteParkingListener;
-import models.Interfaces.GetAllParkingListener;
+import models.Interfaces.GetListener;
 import models.Interfaces.GetParkingLotsByUserIdListener;
 import room.AppLocalDb;
 import room.AppLocalDbRepository;
@@ -35,7 +33,7 @@ public class ParkingMock {
 
     }
 
-    public void getAllParkingLots(GetAllParkingListener listener) {
+    public void getAllParkingLots(GetListener<List<Parking>> listener) {
         firebaseModel.getAllParkingLots(listener);
 ////        executor.execute(() -> {
 ////            List<Parking> data = localDb.parkingDao().getAll();
@@ -45,7 +43,7 @@ public class ParkingMock {
 //        });
     }
 
-    public void addParkingLot(Parking newParking, AddParkingListener listener) {
+    public void addParkingLot(Parking newParking, GetListener<Void> listener) {
         firebaseModel.addParkingLot(newParking, listener);
 //        executor.execute(() -> {
 //            localDb.parkingDao().insertAll(newParking);
@@ -60,12 +58,13 @@ public class ParkingMock {
     }
 
     public void getParkingLotsByUserId(String userId, GetParkingLotsByUserIdListener listener) {
-        executor.execute(() -> {
-            List<Parking> data = localDb.parkingDao().getAll().stream().filter((parking) -> parking.getUserId().equals(userId)).collect(Collectors.toList());
-            mainHandler.post(() -> {
-                listener.onComplete(data);
-            });
-        });
+        firebaseModel.getParkingLotOfUser(userId,listener);
+//        executor.execute(() -> {
+//            List<Parking> data = localDb.parkingDao().getAll().stream().filter((parking) -> parking.getUserId().equals(userId)).collect(Collectors.toList());
+//            mainHandler.post(() -> {
+//                listener.onComplete(data);
+//            });
+//        });
     }
 
     public void deleteParkingLot(Parking parking, DeleteParkingListener listener) {
