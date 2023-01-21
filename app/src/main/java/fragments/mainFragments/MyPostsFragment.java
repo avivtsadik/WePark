@@ -1,8 +1,11 @@
 package fragments.mainFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,11 +22,12 @@ import java.util.List;
 import adapters.ParkingListAdapter;
 import models.Parking;
 import models.ParkingMock;
+import models.ParkingsListFragmentViewModel;
 import services.LoginService;
 
 public class MyPostsFragment extends Fragment {
-    private List<Parking> parkingList = new LinkedList<>();
     private ParkingListAdapter adapter;
+    ParkingsListFragmentViewModel viewModel;
 
     public MyPostsFragment() {
         // Required empty public constructor
@@ -36,32 +40,38 @@ public class MyPostsFragment extends Fragment {
         String userId = LoginService.instance().getLoginService().getUserId();
 
         ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
-            parkingList = prkList;
-            adapter.setData(parkingList);
+            viewModel.setParkingList(prkList);
+            adapter.setData(viewModel.getParkingList());
         });
 
         RecyclerView list = view.findViewById(R.id.myPostsList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapter = new ParkingListAdapter(getLayoutInflater(), parkingList, R.layout.parking_card_editable);
+        adapter = new ParkingListAdapter(getLayoutInflater(), viewModel.getParkingList(), R.layout.parking_card_editable);
 
         adapter.setOnItemEditListener(() -> {
             ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
-                parkingList = prkList;
-                adapter.setData(parkingList);
+                viewModel.setParkingList(prkList);
+                adapter.setData(viewModel.getParkingList());
             });
         });
 
         adapter.setOnItemDeleteListener(() -> {
             ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
-                parkingList = prkList;
-                adapter.setData(parkingList);
+                viewModel.setParkingList(prkList);
+                adapter.setData(viewModel.getParkingList());
             });
         });
 
         list.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        viewModel = new ViewModelProvider(this).get(ParkingsListFragmentViewModel.class);
     }
 }
