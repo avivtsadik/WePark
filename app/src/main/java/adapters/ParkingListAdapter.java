@@ -3,6 +3,7 @@ package adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wepark.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
     AppCompatImageView editPostButton;
     AppCompatImageView deletePostButton;
     List<Parking> data;
+    ImageView parkingImage;
 
     public ParkingListHolder(@NonNull View itemView, ParkingListAdapter.OnItemEditListener listener, List<Parking> data) {
         super(itemView);
@@ -32,13 +35,18 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
         editPostButton = itemView.findViewById(R.id.editPostButton);
         deletePostButton = itemView.findViewById(R.id.deletePostButton);
         userIdTv = itemView.findViewById(R.id.userIdTextView);
+        parkingImage = itemView.findViewById(R.id.parkingImage);
     }
 
     public void bind(Parking parking, ParkingListAdapter.OnItemEditListener editListener, ParkingListAdapter.OnItemDeleteListener deleteListener) {
         cityTv.setText(parking.getCity());
         sizeTv.setText(parking.getSize());
         userIdTv.setText(parking.getUserId());
-
+        if (parking.getAvatarUrl() != "") {
+            Picasso.get().load(parking.getAvatarUrl()).placeholder(R.drawable.avatar).into(parkingImage);
+        } else {
+            parkingImage.setImageResource(R.drawable.avatar);
+        }
         if (editPostButton != null) {
             editPostButton.setOnClickListener(view -> {
 

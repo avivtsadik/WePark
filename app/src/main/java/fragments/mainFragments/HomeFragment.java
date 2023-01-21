@@ -1,10 +1,13 @@
 package fragments.mainFragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,10 +25,11 @@ import activities.OnFragmentInteractionListener;
 import adapters.ParkingListAdapter;
 import models.Parking;
 import models.ParkingMock;
+import models.ParkingsListFragmentViewModel;
 
 public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private List<Parking> parkingLots = new LinkedList<>();
+    ParkingsListFragmentViewModel viewModel;
     ParkingListAdapter adapter;
 
     public HomeFragment() {
@@ -37,14 +41,14 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ParkingMock.instance().getAllParkingLots((prkList) -> {
-            parkingLots = prkList;
-            adapter.setData(parkingLots);
+            viewModel.setParkingList(prkList);
+            adapter.setData(viewModel.getParkingList());
         });
 
         RecyclerView list = view.findViewById(R.id.parkingList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ParkingListAdapter(getLayoutInflater(), parkingLots, R.layout.parking_card);
+        adapter = new ParkingListAdapter(getLayoutInflater(), viewModel.getParkingList(), R.layout.parking_card);
         list.setAdapter(adapter);
 
         Button addParkingBtn = view.findViewById(R.id.addParkingButton);
@@ -58,7 +62,11 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        viewModel = new ViewModelProvider(this).get(ParkingsListFragmentViewModel.class);
+    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -74,8 +82,8 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ParkingMock.instance().getAllParkingLots((prkList) -> {
-            parkingLots = prkList;
-            adapter.setData(parkingLots);
+            viewModel.setParkingList(prkList);
+            adapter.setData(viewModel.getParkingList());
         });
     }
 

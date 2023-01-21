@@ -21,8 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import models.Interfaces.AddParkingListener;
-import models.Interfaces.GetAllParkingListener;
+import models.Interfaces.GetListener;
+import models.Interfaces.GetParkingLotsByUserIdListener;
 
 public class FirebaseModel {
     FirebaseFirestore db;
@@ -40,7 +40,7 @@ public class FirebaseModel {
         db.setFirestoreSettings(settings);
     }
 
-    public void getAllParkingLots(GetAllParkingListener listener) {
+    public void getAllParkingLots(GetListener<List<Parking>> listener) {
         db.collection("parkings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -57,11 +57,28 @@ public class FirebaseModel {
         });
     }
 
-    public void addParkingLot(Parking newParking, AddParkingListener listener) {
+    public void getParkingLotOfUser(String userId,GetParkingLotsByUserIdListener listener) {
+        db.collection("parkings").whereEqualTo("userId",userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Parking> list = new LinkedList<>();
+                if (task.isSuccessful()) {
+                    QuerySnapshot jsonsList = task.getResult();
+                    for (DocumentSnapshot json : jsonsList) {
+                        Parking pr = Parking.fromJson(json.getData());
+                        list.add(pr);
+                    }
+                }
+                listener.onComplete(list);
+            }
+        });
+    }
+
+    public void addParkingLot(Parking newParking, GetListener<Void> listener) {
         db.collection("parkings").document(newParking.getId()).set(newParking.toJson()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                listener.onComplete();
+                listener.onComplete(null);
             }
         });
     }

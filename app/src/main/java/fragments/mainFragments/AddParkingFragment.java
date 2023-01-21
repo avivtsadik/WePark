@@ -104,13 +104,16 @@ public class AddParkingFragment extends Fragment {
                 imageView.buildDrawingCache();
                 Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                Parking parking = new Parking(parkingId, userId, city, size);
+                Parking parking = new Parking(parkingId, userId, city, size,"");
                 ParkingMock.instance().uploadParkingLotImage(bitmap, parkingId, new FirebaseModel.UploadImageListener() {
                     @Override
                     public void onComplete(String uri) {
+                        if (uri != null){
+                            parking.setAvatarUrl(uri);
+                        }
                         ParkingMock.instance().addParkingLot(parking, new AddParkingListener() {
                             @Override
-                            public void onComplete() {
+                            public void onComplete(unused) {
                                 Toast.makeText(getContext(), "Parking Added Successfully", Toast.LENGTH_SHORT).show();
                                 Navigation.findNavController(view).navigate(R.id.action_addParkingFragmentNav_to_homeFragmentNav);
                             }
