@@ -3,34 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragmentNav">
+    app:startDestination="@id/fragment_home_nav_graph">
 
     <fragment
-        android:id="@+id/homeFragmentNav"
+        android:id="@+id/fragment_home_nav_graph"
         android:name="fragments.mainFragments.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragmentNav_to_addParkingFragmentNav"
-            app:destination="@id/addParkingFragmentNav" />
+            app:destination="@id/fragment_add_parking_nav_graph" />
     </fragment>
     <fragment
-        android:id="@+id/manageFavoritesFragmentNav"
+        android:id="@+id/fragment_manage_favorites_nav_graph"
         android:name="fragments.mainFragments.ManageFavoritesFragment"
-        android:label="fragment_manage_favorites"
+        android:label="Manage Farvorites"
         tools:layout="@layout/fragment_manage_favorites" />
     <fragment
-        android:id="@+id/profileFragmentNav"
+        android:id="@+id/fragment_profile_nav_graph"
         android:name="fragments.mainFragments.ProfileFragment"
-        android:label="fragment_edit_parking"
+        android:label="Edit Parking"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/addParkingFragmentNav"
+        android:id="@+id/fragment_my_posts_nav_graph"
+        android:name="fragments.mainFragments.MyPostsFragment"
+        android:label="My Posts"
+        tools:layout="@layout/fragment_my_posts" />
+    <fragment
+        android:id="@+id/fragment_add_parking_nav_graph"
         android:name="fragments.mainFragments.AddParkingFragment"
-        android:label="fragment_add_parking"
-        tools:layout="@layout/fragment_add_parking" >
+        android:label="Add Parking"
+        tools:layout="@layout/fragment_add_parking">
         <action
             android:id="@+id/action_addParkingFragmentNav_to_homeFragmentNav"
-            app:destination="@id/homeFragmentNav" />
+            app:destination="@id/fragment_home_nav_graph" />
     </fragment>
 </navigation>

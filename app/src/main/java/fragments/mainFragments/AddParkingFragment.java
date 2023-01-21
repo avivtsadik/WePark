@@ -20,12 +20,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.wepark.R;
 
 import java.util.UUID;
 
 import models.FirebaseModel;
+import models.Interfaces.AddParkingListener;
 import models.Parking;
 import models.ParkingMock;
 import services.LoginService;
@@ -106,8 +108,12 @@ public class AddParkingFragment extends Fragment {
                 ParkingMock.instance().uploadParkingLotImage(bitmap, parkingId, new FirebaseModel.UploadImageListener() {
                     @Override
                     public void onComplete(String uri) {
-                        ParkingMock.instance().addParkingLot(parking, () -> {
-                            Toast.makeText(getContext(), "Parking Added Successfully", Toast.LENGTH_SHORT).show();
+                        ParkingMock.instance().addParkingLot(parking, new AddParkingListener() {
+                            @Override
+                            public void onComplete() {
+                                Toast.makeText(getContext(), "Parking Added Successfully", Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(view).navigate(R.id.action_addParkingFragmentNav_to_homeFragmentNav);
+                            }
                         });
                     }
                 });
