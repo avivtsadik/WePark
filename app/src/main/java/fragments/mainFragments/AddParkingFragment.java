@@ -27,7 +27,6 @@ import com.example.wepark.R;
 import java.util.UUID;
 
 import models.FirebaseModel;
-import models.Interfaces.AddParkingListener;
 import models.Parking;
 import models.ParkingMock;
 import services.LoginService;
@@ -104,19 +103,16 @@ public class AddParkingFragment extends Fragment {
                 imageView.buildDrawingCache();
                 Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
-                Parking parking = new Parking(parkingId, userId, city, size,"");
+                Parking parking = new Parking(parkingId, userId, city, size, "");
                 ParkingMock.instance().uploadParkingLotImage(bitmap, parkingId, new FirebaseModel.UploadImageListener() {
                     @Override
                     public void onComplete(String uri) {
-                        if (uri != null){
+                        if (uri != null) {
                             parking.setAvatarUrl(uri);
                         }
-                        ParkingMock.instance().addParkingLot(parking, new AddParkingListener() {
-                            @Override
-                            public void onComplete(unused) {
-                                Toast.makeText(getContext(), "Parking Added Successfully", Toast.LENGTH_SHORT).show();
-                                Navigation.findNavController(view).navigate(R.id.action_addParkingFragmentNav_to_homeFragmentNav);
-                            }
+                        ParkingMock.instance().addParkingLot(parking, (unused) -> {
+                            Toast.makeText(getContext(), "Parking Added Successfully", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(view).navigate(R.id.action_addParkingFragmentNav_to_homeFragmentNav);
                         });
                     }
                 });
