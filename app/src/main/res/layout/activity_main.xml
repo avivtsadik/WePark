@@ -27,7 +27,6 @@
         app:itemBackground="@drawable/drawer_item"
         app:itemIconTint="@color/background"
         app:itemTextColor="@color/background"
-
         app:menu="@menu/nevigation_item">
 
         <LinearLayout

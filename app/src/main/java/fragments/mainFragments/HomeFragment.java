@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,8 +55,8 @@ public class HomeFragment extends Fragment {
 
         addParkingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mListener.loadFragment(new AddParkingFragment());
+            public void onClick(View view2) {
+                Navigation.findNavController(view2).navigate(R.id.action_homeFragmentNav_to_addParkingFragmentNav);
             }
         });
 
