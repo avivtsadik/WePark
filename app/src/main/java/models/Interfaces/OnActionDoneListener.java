@@ -1,5 +1,5 @@
 package models.Interfaces;
 
-public interface GetListener<T> {
+public interface OnActionDoneListener<T> {
     void onComplete(T data);
 }

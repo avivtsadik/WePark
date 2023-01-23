@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import models.FirebaseModel;
+import models.Interfaces.OnActionDoneListener;
 import models.Parking;
 import models.ParkingMock;
 import services.LoginService;
@@ -117,7 +117,7 @@ public class AddParkingFragment extends Fragment {
                 Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 
                 Parking parking = new Parking(parkingId, userId, city, size, "");
-                ParkingMock.instance().uploadParkingLotImage(bitmap, parkingId, new FirebaseModel.UploadImageListener() {
+                ParkingMock.instance().uploadParkingLotImage(bitmap, parkingId, new OnActionDoneListener<String>() {
                     @Override
                     public void onComplete(String uri) {
                         if (uri != null) {

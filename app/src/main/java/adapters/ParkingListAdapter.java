@@ -55,7 +55,7 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
 
         if (deletePostButton != null) {
             deletePostButton.setOnClickListener(view -> {
-                ParkingMock.instance().deleteParkingLot(parking, deleteListener::onItemDeleted);
+                ParkingMock.instance().deleteParkingLot(parking, (data) -> deleteListener.onItemDeleted());
             });
         }
     }
@@ -111,6 +111,7 @@ public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> 
 
     @Override
     public int getItemCount() {
+        if (data == null) return 0;
         return data.size();
     }
 

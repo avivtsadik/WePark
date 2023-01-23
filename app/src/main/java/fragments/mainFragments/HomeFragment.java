@@ -10,11 +10,13 @@ import androidx.navigation.Navigation;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.wepark.R;
 
@@ -29,8 +31,10 @@ import models.ParkingsListFragmentViewModel;
 
 public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    ParkingsListFragmentViewModel viewModel;
-    ParkingListAdapter adapter;
+    private ParkingsListFragmentViewModel viewModel;
+    private ParkingListAdapter adapter;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
     }
@@ -40,24 +44,35 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ParkingMock.instance().getAllParkingLots((prkList) -> {
-            viewModel.setParkingList(prkList);
-            adapter.setData(viewModel.getParkingList());
-        });
-
         RecyclerView list = view.findViewById(R.id.parkingList);
+        progressBar = view.findViewById(R.id.progressBar);
+        Button addParkingBtn = view.findViewById(R.id.addParkingButton);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ParkingListAdapter(getLayoutInflater(), viewModel.getParkingList(), R.layout.parking_card);
+        adapter = new ParkingListAdapter(getLayoutInflater(), viewModel.getParkingList().getValue(), R.layout.parking_card);
         list.setAdapter(adapter);
-
-        Button addParkingBtn = view.findViewById(R.id.addParkingButton);
 
         addParkingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view2) {
                 Navigation.findNavController(view2).navigate(R.id.action_homeFragmentNav_to_addParkingFragmentNav);
             }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            ParkingMock.instance().refreshAllParkingLots();
+        });
+
+        ParkingMock.instance().EventStudentsListLoadingState.observe(getViewLifecycleOwner(),status->{
+            swipeRefreshLayout.setRefreshing(status == ParkingMock.LoadingState.LOADING);
+        });
+
+        viewModel.getParkingList().observe(getViewLifecycleOwner(), updatedList -> {
+            adapter.setData(updatedList);
+            progressBar.setVisibility(View.GONE);
+
         });
 
         return view;
@@ -76,15 +91,6 @@ public class HomeFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ParkingMock.instance().getAllParkingLots((prkList) -> {
-            viewModel.setParkingList(prkList);
-            adapter.setData(viewModel.getParkingList());
-        });
     }
 
     @Override

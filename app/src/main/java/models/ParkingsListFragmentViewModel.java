@@ -1,17 +1,14 @@
 package models;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class ParkingsListFragmentViewModel extends ViewModel {
-    private List<Parking> parkingList = new LinkedList<>();
+    private LiveData<List<Parking>> parkingList = ParkingMock.instance().getAllParkingLots();
 
-    public List<Parking> getParkingList(){
+    public LiveData<List<Parking>> getParkingList() {
         return parkingList;
-    }
-    public void setParkingList(List<Parking> list){
-        parkingList= list;
     }
 }
