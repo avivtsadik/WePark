@@ -111,6 +111,7 @@ public class ParkingListAdapter extends RecyclerView.Adapter<ParkingListHolder> 
 
     @Override
     public int getItemCount() {
+        if (data == null) return 0;
         return data.size();
     }
 

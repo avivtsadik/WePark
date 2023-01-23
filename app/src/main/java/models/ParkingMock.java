@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.core.os.HandlerCompat;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -31,47 +32,43 @@ public class ParkingMock {
 
     }
 
-    public void getAllParkingLots(OnActionDoneListener<List<Parking>> listener) {
-////        executor.execute(() -> {
-////            List<Parking> data = localDb.parkingDao().getAll();
-////            mainHandler.post(() -> {
-//                listener.onComplete(data);
-//            });
-//        });
+    LiveData<List<Parking>> parkingList;
 
+    public LiveData<List<Parking>> getAllParkingLots() {
+        if (parkingList == null) {
+            parkingList = localDb.parkingDao().getAll();
+            refreshAllParkingLots();
+        }
+
+        return parkingList;
+    }
+
+    public void refreshAllParkingLots() {
         // get local last update
         Long localLastUpdate = Parking.getLocalLastUpdate();
         // get all updated records from firebase since local update
-        firebaseModel.getAllParkingLotsSince(localLastUpdate,list->{
+        firebaseModel.getAllParkingLotsSince(localLastUpdate, list -> {
             executor.execute(() -> {
                 Log.d("TAG", " firebase return : " + list.size());
                 Long time = localLastUpdate;
-                for(Parking pr:list){
+                for (Parking pr : list) {
                     //insert new records into ROOM
                     localDb.parkingDao().insertAll(pr);
-                    if(time < pr.getLastUpdated()){
+                    if (time < pr.getLastUpdated()) {
                         time = pr.getLastUpdated();
                     }
                 }
                 //update local last update
                 Parking.setLocalLastUpdate(time);
-                // return complete list from ROOM
-                List<Parking> complete = localDb.parkingDao().getAll();
-                mainHandler.post(() -> {
-                    listener.onComplete(complete);
-                });
             });
         });
     }
 
     public void addParkingLot(Parking newParking, OnActionDoneListener<Void> listener) {
-        firebaseModel.addParkingLot(newParking, listener);
-//        executor.execute(() -> {
-//            localDb.parkingDao().insertAll(newParking);
-//            mainHandler.post(() -> {
-//                listener.onComplete();
-//            });
-//        });
+        firebaseModel.addParkingLot(newParking, (Void) -> {
+            refreshAllParkingLots();
+            listener.onComplete(null);
+        });
     }
 
     public void uploadParkingLotImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {

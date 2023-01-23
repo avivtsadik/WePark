@@ -39,29 +39,18 @@ public class MyPostsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_posts, container, false);
         String userId = LoginService.instance().getLoginService().getUserId();
 
-        ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
-            viewModel.setParkingList(prkList);
-            adapter.setData(viewModel.getParkingList());
-        });
-
         RecyclerView list = view.findViewById(R.id.myPostsList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapter = new ParkingListAdapter(getLayoutInflater(), viewModel.getParkingList(), R.layout.parking_card_editable);
+        adapter = new ParkingListAdapter(getLayoutInflater(), viewModel.getParkingList().getValue(), R.layout.parking_card_editable);
 
         adapter.setOnItemEditListener(() -> {
-            ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
-                viewModel.setParkingList(prkList);
-                adapter.setData(viewModel.getParkingList());
-            });
+            ParkingMock.instance().refreshAllParkingLots();
         });
 
         adapter.setOnItemDeleteListener(() -> {
-            ParkingMock.instance().getParkingLotsByUserId(userId, (prkList) -> {
-                viewModel.setParkingList(prkList);
-                adapter.setData(viewModel.getParkingList());
-            });
+            ParkingMock.instance().refreshAllParkingLots();
         });
 
         list.setAdapter(adapter);

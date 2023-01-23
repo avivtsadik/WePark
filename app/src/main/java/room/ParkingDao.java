@@ -1,5 +1,6 @@
 package room;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,7 +15,7 @@ import models.Parking;
 @Dao
 public interface ParkingDao {
     @Query("select * from Parking")
-    List<Parking> getAll();
+    LiveData<List<Parking>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Parking... parkings);
