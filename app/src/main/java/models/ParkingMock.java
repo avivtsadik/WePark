@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-
-import models.Interfaces.DeleteParkingListener;
-import models.Interfaces.GetListener;
-import models.Interfaces.GetParkingLotsByUserIdListener;
+import models.Interfaces.OnActionDoneListener;
 import room.AppLocalDb;
 import room.AppLocalDbRepository;
 
@@ -33,7 +30,7 @@ public class ParkingMock {
 
     }
 
-    public void getAllParkingLots(GetListener<List<Parking>> listener) {
+    public void getAllParkingLots(OnActionDoneListener<List<Parking>> listener) {
         firebaseModel.getAllParkingLots(listener);
 ////        executor.execute(() -> {
 ////            List<Parking> data = localDb.parkingDao().getAll();
@@ -43,7 +40,7 @@ public class ParkingMock {
 //        });
     }
 
-    public void addParkingLot(Parking newParking, GetListener<Void> listener) {
+    public void addParkingLot(Parking newParking, OnActionDoneListener<Void> listener) {
         firebaseModel.addParkingLot(newParking, listener);
 //        executor.execute(() -> {
 //            localDb.parkingDao().insertAll(newParking);
@@ -53,12 +50,12 @@ public class ParkingMock {
 //        });
     }
 
-    public void uploadParkingLotImage(Bitmap bitmap, String parkingId, FirebaseModel.UploadImageListener listener) {
+    public void uploadParkingLotImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
         firebaseModel.uploadImage(bitmap, parkingId, listener);
     }
 
-    public void getParkingLotsByUserId(String userId, GetParkingLotsByUserIdListener listener) {
-        firebaseModel.getParkingLotOfUser(userId,listener);
+    public void getParkingLotsByUserId(String userId, OnActionDoneListener<List> listener) {
+        firebaseModel.getParkingLotOfUser(userId, listener);
 //        executor.execute(() -> {
 //            List<Parking> data = localDb.parkingDao().getAll().stream().filter((parking) -> parking.getUserId().equals(userId)).collect(Collectors.toList());
 //            mainHandler.post(() -> {
@@ -67,11 +64,11 @@ public class ParkingMock {
 //        });
     }
 
-    public void deleteParkingLot(Parking parking, DeleteParkingListener listener) {
+    public void deleteParkingLot(Parking parking, OnActionDoneListener listener) {
         executor.execute(() -> {
             localDb.parkingDao().delete(parking);
             mainHandler.post(() -> {
-                listener.onComplete();
+                listener.onComplete(null);
             });
         });
     }

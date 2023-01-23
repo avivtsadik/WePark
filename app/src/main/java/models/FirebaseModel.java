@@ -21,8 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import models.Interfaces.GetListener;
-import models.Interfaces.GetParkingLotsByUserIdListener;
+import models.Interfaces.OnActionDoneListener;
 
 public class FirebaseModel {
     FirebaseFirestore db;
@@ -40,7 +39,7 @@ public class FirebaseModel {
         db.setFirestoreSettings(settings);
     }
 
-    public void getAllParkingLots(GetListener<List<Parking>> listener) {
+    public void getAllParkingLots(OnActionDoneListener<List<Parking>> listener) {
         db.collection("parkings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -57,7 +56,7 @@ public class FirebaseModel {
         });
     }
 
-    public void getParkingLotOfUser(String userId,GetParkingLotsByUserIdListener listener) {
+    public void getParkingLotOfUser(String userId, OnActionDoneListener<List> listener) {
         db.collection("parkings").whereEqualTo("userId",userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -74,7 +73,7 @@ public class FirebaseModel {
         });
     }
 
-    public void addParkingLot(Parking newParking, GetListener<Void> listener) {
+    public void addParkingLot(Parking newParking, OnActionDoneListener<Void> listener) {
         db.collection("parkings").document(newParking.getId()).set(newParking.toJson()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -83,11 +82,7 @@ public class FirebaseModel {
         });
     }
 
-    public interface UploadImageListener {
-        void onComplete(String uri);
-    }
-
-    public void uploadImage(Bitmap bitmap, String parkingId, UploadImageListener listener) {
+    public void uploadImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
         StorageReference storageRef = storage.getReference();
 
         StorageReference imageRef = storageRef.child(parkingId + IMAGE_NAME_POSTFIX);
@@ -113,5 +108,9 @@ public class FirebaseModel {
                 });
             }
         });
+    }
+
+    public void addFavorite(String userId, String city, OnActionDoneListener listener) {
+
     }
 }
