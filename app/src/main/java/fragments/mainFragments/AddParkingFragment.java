@@ -125,7 +125,7 @@ public class AddParkingFragment extends Fragment {
                         }
                         ParkingMock.instance().addParkingLot(parking, (unused) -> {
                             Toast.makeText(getContext(), "Parking Added Successfully", Toast.LENGTH_SHORT).show();
-                            Navigation.findNavController(view).navigate(R.id.action_addParkingFragmentNav_to_homeFragmentNav);
+                            Navigation.findNavController(view).popBackStack();
                         });
                     }
                 });

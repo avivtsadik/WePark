@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -101,22 +102,23 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id != navigationView.getCheckedItem().getItemId()) {
+            NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.fragment_home_nav_graph, false).build();
             item.setChecked(true);
             switch (id) {
                 case R.id.optionHome: {
-                    navController.navigate(R.id.fragment_home_nav_graph);
+                    navController.navigate(R.id.fragment_home_nav_graph, null, navOptions);
                     break;
                 }
                 case R.id.optionManageFavorites: {
-                    navController.navigate(R.id.fragment_manage_favorites_nav_graph);
+                    navController.navigate(R.id.fragment_manage_favorites_nav_graph, null, navOptions);
                     break;
                 }
                 case R.id.optionMyPosts: {
-                    navController.navigate(R.id.fragment_my_posts_nav_graph);
+                    navController.navigate(R.id.fragment_my_posts_nav_graph, null, navOptions);
                     break;
                 }
                 case R.id.optionProfile: {
-                    navController.navigate(R.id.fragment_profile_nav_graph);
+                    navController.navigate(R.id.fragment_profile_nav_graph, null, navOptions);
                     break;
                 }
             }
