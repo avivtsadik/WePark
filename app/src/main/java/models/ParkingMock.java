@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -23,16 +24,26 @@ public class ParkingMock {
         return _instance;
     }
 
+    private LiveData<List<Parking>> parkingList;
     private Executor executor = Executors.newSingleThreadExecutor();
     private Handler mainHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     private AppLocalDbRepository localDb = AppLocalDb.getAppDb;
     private FirebaseModel firebaseModel = new FirebaseModel();
 
+    public enum LoadingState {
+        LOADING,
+        NOT_LOADING
+    }
+
+    final public MutableLiveData<LoadingState> EventStudentsListLoadingState = new MutableLiveData<LoadingState>(LoadingState.NOT_LOADING);
+
     private ParkingMock() {
 
     }
 
-    LiveData<List<Parking>> parkingList;
+//    public LiveData<List<Parking>> getParkingListByUserIs(String userId) {
+//        parkingList.;
+//    }
 
     public LiveData<List<Parking>> getAllParkingLots() {
         if (parkingList == null) {
@@ -44,6 +55,7 @@ public class ParkingMock {
     }
 
     public void refreshAllParkingLots() {
+        EventStudentsListLoadingState.setValue(LoadingState.LOADING);
         // get local last update
         Long localLastUpdate = Parking.getLocalLastUpdate();
         // get all updated records from firebase since local update
@@ -60,6 +72,7 @@ public class ParkingMock {
                 }
                 //update local last update
                 Parking.setLocalLastUpdate(time);
+                EventStudentsListLoadingState.postValue(LoadingState.NOT_LOADING);
             });
         });
     }

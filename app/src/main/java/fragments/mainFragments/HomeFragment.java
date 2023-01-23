@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
     private ParkingsListFragmentViewModel viewModel;
     private ParkingListAdapter adapter;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
     }
@@ -45,6 +47,7 @@ public class HomeFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.parkingList);
         progressBar = view.findViewById(R.id.progressBar);
         Button addParkingBtn = view.findViewById(R.id.addParkingButton);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
 
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,9 +61,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            ParkingMock.instance().refreshAllParkingLots();
+        });
+
+        ParkingMock.instance().EventStudentsListLoadingState.observe(getViewLifecycleOwner(),status->{
+            swipeRefreshLayout.setRefreshing(status == ParkingMock.LoadingState.LOADING);
+        });
+
         viewModel.getParkingList().observe(getViewLifecycleOwner(), updatedList -> {
             adapter.setData(updatedList);
             progressBar.setVisibility(View.GONE);
+
         });
 
         return view;
