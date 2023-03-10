@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "d7b33dd67f9b229b877a3a6bb021bca5",
+    "version": 10,
+    "identityHash": "32b42b1db152316c1c1c18155d1f7bf5",
     "entities": [
       {
         "tableName": "Parking",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `displayName` TEXT, `favorites` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `displayName` TEXT, `favorites` TEXT, `lastUpdated` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -75,6 +75,12 @@
             "columnName": "favorites",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "lastUpdated",
+            "columnName": "lastUpdated",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -90,7 +96,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7b33dd67f9b229b877a3a6bb021bca5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '32b42b1db152316c1c1c18155d1f7bf5')"
     ]
   }
 }
