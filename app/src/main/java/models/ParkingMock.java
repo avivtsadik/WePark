@@ -30,12 +30,7 @@ public class ParkingMock {
     private AppLocalDbRepository localDb = AppLocalDb.getAppDb;
     private FirebaseModel firebaseModel = new FirebaseModel();
 
-    public enum LoadingState {
-        LOADING,
-        NOT_LOADING
-    }
-
-    final public MutableLiveData<LoadingState> EventStudentsListLoadingState = new MutableLiveData<LoadingState>(LoadingState.NOT_LOADING);
+    final public MutableLiveData<LoadingState> EventStudentsListLoadingState = new MutableLiveData<LoadingState>(LoadingState.NOT_LOADING_PARKING);
 
     private ParkingMock() {
 
@@ -55,7 +50,7 @@ public class ParkingMock {
     }
 
     public void refreshAllParkingLots() {
-        EventStudentsListLoadingState.setValue(LoadingState.LOADING);
+        EventStudentsListLoadingState.setValue(LoadingState.LOADING_PARKING);
         // get local last update
         Long localLastUpdate = Parking.getLocalLastUpdate();
         // get all updated records from firebase since local update
@@ -72,7 +67,7 @@ public class ParkingMock {
                 }
                 //update local last update
                 Parking.setLocalLastUpdate(time);
-                EventStudentsListLoadingState.postValue(LoadingState.NOT_LOADING);
+                EventStudentsListLoadingState.postValue(LoadingState.NOT_LOADING_PARKING);
             });
         });
     }

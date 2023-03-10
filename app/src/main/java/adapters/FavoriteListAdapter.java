@@ -1,11 +1,11 @@
 package adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,14 +14,18 @@ import com.example.wepark.R;
 
 import java.util.List;
 
-import models.Favorite;
+import models.Parking;
+import models.User;
+import models.UserMock;
+import services.LoginService;
+
 
 class FavoriteListHolder extends RecyclerView.ViewHolder {
     TextView textView;
     ImageView removeBtn;
-    List<Favorite> data;
+    List<String> data;
 
-    public FavoriteListHolder(@NonNull View itemView, FavoriteListAdapter.OnItemClickListener listener, List<Favorite> data) {
+    public FavoriteListHolder(@NonNull View itemView, FavoriteListAdapter.OnItemClickListener listener, List<String> data) {
         super(itemView);
         this.data = data;
         textView = itemView.findViewById(R.id.favoriteItemTitle);
@@ -30,13 +34,17 @@ class FavoriteListHolder extends RecyclerView.ViewHolder {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                view.refreshDrawableState();
+                User user = UserMock.instance().getUser(LoginService.instance().getLoginService().getUserId()).getValue();
+                user.getFavorites().removeIf(favorite -> favorite.equals(textView.getText().toString()));
+                UserMock.instance().updateFavorites(user, (unused) -> {
+                    Toast.makeText(view.getContext(), "Favorite removed successfully", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
 
-    public void bind(Favorite favorite, int pos) {
-        textView.setText(favorite.getCity());
+    public void bind(String favorite) {
+        textView.setText(favorite);
     }
 }
 
@@ -48,11 +56,16 @@ public class FavoriteListAdapter extends RecyclerView.Adapter<FavoriteListHolder
     }
 
     LayoutInflater inflater;
-    List<Favorite> data;
+    List<String> data;
 
-    public FavoriteListAdapter(LayoutInflater inflater, List<Favorite> data) {
+    public FavoriteListAdapter(LayoutInflater inflater, List<String> data) {
         this.inflater = inflater;
         this.data = data;
+    }
+
+    public void setData(List<String> favorites) {
+        this.data = favorites;
+        notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -68,8 +81,8 @@ public class FavoriteListAdapter extends RecyclerView.Adapter<FavoriteListHolder
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteListHolder holder, int position) {
-        Favorite favorite = data.get(position);
-        holder.bind(favorite, position);
+        String favorite = data.get(position);
+        holder.bind(favorite);
     }
 
     @Override

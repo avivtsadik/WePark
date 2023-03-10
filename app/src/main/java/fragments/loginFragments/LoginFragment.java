@@ -27,8 +27,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.LinkedList;
+
 import activities.MainActivity;
 import activities.OnFragmentInteractionListener;
+import models.User;
+import models.UserMock;
 import services.GoogleLoginService;
 import services.LoginService;
 import services.WeParkLoginService;
@@ -85,6 +89,7 @@ public class LoginFragment extends Fragment {
             WeParkLoginService.instance().signIn(email, password, new WeParkLoginService.SigningListener() {
                 @Override
                 public void onSuccess() {
+                    UserMock.instance().updateFavorites(new User(LoginService.instance().getLoginService().getUserId(),LoginService.instance().getLoginService().getUserName(),new LinkedList<>()), data -> {});
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                     getActivity().finish();
@@ -113,6 +118,7 @@ public class LoginFragment extends Fragment {
             try {
                 task.getResult(ApiException.class);
                 LoginService.instance().setLoginService(GoogleLoginService.instance());
+                UserMock.instance().updateFavorites(new User(LoginService.instance().getLoginService().getUserId(),LoginService.instance().getLoginService().getUserName(),new LinkedList<>()), data2 -> {});
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();

@@ -20,12 +20,9 @@ import android.widget.ProgressBar;
 
 import com.example.wepark.R;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import activities.OnFragmentInteractionListener;
 import adapters.ParkingListAdapter;
-import models.Parking;
+import models.LoadingState;
 import models.ParkingMock;
 import models.ParkingsListFragmentViewModel;
 
@@ -66,7 +63,7 @@ public class HomeFragment extends Fragment {
         });
 
         ParkingMock.instance().EventStudentsListLoadingState.observe(getViewLifecycleOwner(),status->{
-            swipeRefreshLayout.setRefreshing(status == ParkingMock.LoadingState.LOADING);
+            swipeRefreshLayout.setRefreshing(status == LoadingState.LOADING_PARKING);
         });
 
         viewModel.getParkingList().observe(getViewLifecycleOwner(), updatedList -> {

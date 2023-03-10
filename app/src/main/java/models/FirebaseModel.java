@@ -113,7 +113,27 @@ public class FirebaseModel {
         });
     }
 
-    public void addFavorite(String userId, String city, OnActionDoneListener listener) {
-
+    public void updateFavorites(User user, OnActionDoneListener listener) {
+        db.collection("users").document(user.getId()).set(user.toJson()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                listener.onComplete(null);
+            }
+        });
+    }
+    public void getUser(String userId, OnActionDoneListener<User> listener) {
+        db.collection("users").whereEqualTo("id",userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                User user = new User();
+                if (task.isSuccessful()) {
+                    QuerySnapshot jsonsList = task.getResult();
+                    for (DocumentSnapshot json : jsonsList) {
+                        user = User.fromJson(json.getData());
+                    }
+                }
+                listener.onComplete(user);
+            }
+        });
     }
 }
