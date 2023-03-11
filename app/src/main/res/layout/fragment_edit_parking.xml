@@ -157,7 +157,7 @@
                             android:layout_width="168dp"
                             android:layout_height="43dp"
                             android:background="@drawable/rounded_backgound_primary"
-                            android:text="Add picture"
+                            android:text="Edit picture"
                             android:textColor="@android:color/white" />
 
                         <View

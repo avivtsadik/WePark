@@ -121,7 +121,7 @@ public class EditParkingFragment extends Fragment {
                     throw new IOException("City not from list");
                 }
 
-                if (!isUserAddImage) throw new Exception("Did not added image");
+                if (!isUserAddImage) throw new Exception("Did not edit image");
 
                 imageView.setDrawingCacheEnabled(true);
                 imageView.buildDrawingCache();
