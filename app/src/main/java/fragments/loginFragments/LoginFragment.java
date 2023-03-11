@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
             WeParkLoginService.instance().signIn(email, password, new WeParkLoginService.SigningListener() {
                 @Override
                 public void onSuccess() {
-                    UserMock.instance().updateFavorites(new User(LoginService.instance().getLoginService().getUserId(),LoginService.instance().getLoginService().getUserName(),new LinkedList<>()), data -> {});
+                    createUserData();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                     getActivity().finish();
@@ -118,7 +118,7 @@ public class LoginFragment extends Fragment {
             try {
                 task.getResult(ApiException.class);
                 LoginService.instance().setLoginService(GoogleLoginService.instance());
-                UserMock.instance().updateFavorites(new User(LoginService.instance().getLoginService().getUserId(),LoginService.instance().getLoginService().getUserName(),new LinkedList<>()), data2 -> {});
+                createUserData();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -143,5 +143,13 @@ public class LoginFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void createUserData() {
+        User emptyUser = new User(LoginService.instance().getLoginService().getUserId(),LoginService.instance().getLoginService().getUserName(),new LinkedList<>());
+        User user = UserMock.instance().getUser(LoginService.instance().getLoginService().getUserId()).getValue();
+        if (user == null) {
+            UserMock.instance().updateFavorites(emptyUser, data2 -> {});
+        }
     }
 }
