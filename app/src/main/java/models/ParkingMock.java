@@ -36,10 +36,6 @@ public class ParkingMock {
 
     }
 
-//    public LiveData<List<Parking>> getParkingListByUserIs(String userId) {
-//        parkingList.;
-//    }
-
     public LiveData<List<Parking>> getAllParkingLots() {
         if (parkingList == null) {
             parkingList = localDb.parkingDao().getAll();
@@ -79,6 +75,19 @@ public class ParkingMock {
         });
     }
 
+    public void deleteParkingLot(Parking parking, OnActionDoneListener listener) {
+        firebaseModel.removeParkingLot(parking.getId(), unused -> {
+            localDb.parkingDao().delete(parking);
+            listener.onComplete(null);
+        });
+//        executor.execute(() -> {
+//            localDb.parkingDao().delete(parking);
+//            mainHandler.post(() -> {
+//                listener.onComplete(null);
+//            });
+//        });
+    }
+
     public void uploadParkingLotImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
         firebaseModel.uploadImage(bitmap, parkingId, listener);
     }
@@ -93,13 +102,5 @@ public class ParkingMock {
 //        });
     }
 
-    public void deleteParkingLot(Parking parking, OnActionDoneListener listener) {
-        executor.execute(() -> {
-            localDb.parkingDao().delete(parking);
-            mainHandler.post(() -> {
-                listener.onComplete(null);
-            });
-        });
-    }
 
 }

@@ -85,6 +85,15 @@ public class FirebaseModel {
         });
     }
 
+    public void removeParkingLot(String parkingId, OnActionDoneListener<Void> listener) {
+        db.collection("parkings").document(parkingId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                listener.onComplete(null);
+            }
+        });
+    }
+
     public void uploadImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
         StorageReference storageRef = storage.getReference();
 

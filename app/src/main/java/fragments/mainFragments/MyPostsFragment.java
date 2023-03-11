@@ -56,6 +56,10 @@ public class MyPostsFragment extends Fragment {
 
         list.setAdapter(adapter);
 
+        viewModel.getParkingList().observe(getViewLifecycleOwner(), updatedList -> {
+            adapter.setData(updatedList.stream().filter(parking -> parking.getUserId().equals(userId)).collect(Collectors.toList()));
+        });
+
         return view;
     }
 
