@@ -28,7 +28,15 @@
         android:id="@+id/fragment_my_posts_nav_graph"
         android:name="fragments.mainFragments.MyPostsFragment"
         android:label="My Posts"
-        tools:layout="@layout/fragment_my_posts" />
+        tools:layout="@layout/fragment_my_posts">
+        <action
+            android:id="@+id/action_fragment_my_posts_nav_graph_to_editParkingFragment"
+            app:destination="@id/editParkingFragment">
+            <argument
+                android:name="parkingId"
+                app:argType="string" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/fragment_add_parking_nav_graph"
         android:name="fragments.mainFragments.AddParkingFragment"
@@ -37,5 +45,16 @@
         <action
             android:id="@+id/action_addParkingFragmentNav_to_homeFragmentNav"
             app:destination="@id/fragment_home_nav_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/editParkingFragment"
+        android:name="fragments.mainFragments.EditParkingFragment"
+        android:label="EditParkingFragment">
+        <argument
+            android:name="parkingId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editParkingFragment_to_fragment_my_posts_nav_graph"
+            app:destination="@id/fragment_my_posts_nav_graph" />
     </fragment>
 </navigation>

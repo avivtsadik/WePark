@@ -86,6 +86,17 @@ public class ParkingMock {
         });
     }
 
+    public void updateParkingLot(Parking parking, OnActionDoneListener listener) {
+        firebaseModel.addParkingLot(parking, unused -> {
+            executor.execute(() -> {
+            localDb.parkingDao().getParking(parking.getId());
+            mainHandler.post(() -> {
+                listener.onComplete(null);
+            });
+        });
+        });
+    }
+
     public void uploadParkingLotImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
         firebaseModel.uploadImage(bitmap, parkingId, listener);
     }

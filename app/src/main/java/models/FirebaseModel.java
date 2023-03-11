@@ -86,9 +86,18 @@ public class FirebaseModel {
     }
 
     public void removeParkingLot(String parkingId, OnActionDoneListener<Void> listener) {
-        db.collection("parkings").document(parkingId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        db.collection("parkings").document(parkingId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onSuccess(Void task) {
+                listener.onComplete(null);
+            }
+        });
+    }
+
+    public void updateParkingLot(String parkingId, OnActionDoneListener<Void> listener) {
+        db.collection("parkings").document(parkingId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void task) {
                 listener.onComplete(null);
             }
         });

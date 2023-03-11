@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wepark.R;
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import fragments.mainFragments.MyPostsFragmentDirections;
 import models.Parking;
 import models.ParkingMock;
 
@@ -49,7 +51,9 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
         }
         if (editPostButton != null) {
             editPostButton.setOnClickListener(view -> {
+                MyPostsFragmentDirections.ActionFragmentMyPostsNavGraphToEditParkingFragment action = MyPostsFragmentDirections.actionFragmentMyPostsNavGraphToEditParkingFragment(parking.getId());
 
+                Navigation.findNavController(view).navigate(action);
             });
         }
 
