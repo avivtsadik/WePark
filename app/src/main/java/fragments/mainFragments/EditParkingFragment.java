@@ -157,6 +157,7 @@ public class EditParkingFragment extends Fragment {
         sizeSpinner.setSelection(sizePosition);
         cityAutoComplete.setText(parking.getCity());
         Picasso.get().load(parking.getAvatarUrl()).placeholder(R.drawable.avatar).into(imageView);
+        isUserAddImage = true;
     }
 
     public String[] getCities() {
