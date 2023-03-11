@@ -77,15 +77,13 @@ public class ParkingMock {
 
     public void deleteParkingLot(Parking parking, OnActionDoneListener listener) {
         firebaseModel.removeParkingLot(parking.getId(), unused -> {
+            executor.execute(() -> {
             localDb.parkingDao().delete(parking);
-            listener.onComplete(null);
+            mainHandler.post(() -> {
+                listener.onComplete(null);
+            });
         });
-//        executor.execute(() -> {
-//            localDb.parkingDao().delete(parking);
-//            mainHandler.post(() -> {
-//                listener.onComplete(null);
-//            });
-//        });
+        });
     }
 
     public void uploadParkingLotImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
