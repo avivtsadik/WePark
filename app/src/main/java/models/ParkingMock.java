@@ -36,10 +36,6 @@ public class ParkingMock {
 
     }
 
-//    public LiveData<List<Parking>> getParkingListByUserIs(String userId) {
-//        parkingList.;
-//    }
-
     public LiveData<List<Parking>> getAllParkingLots() {
         if (parkingList == null) {
             parkingList = localDb.parkingDao().getAll();
@@ -79,27 +75,39 @@ public class ParkingMock {
         });
     }
 
+    public void deleteParkingLot(Parking parking, OnActionDoneListener listener) {
+        firebaseModel.removeParkingLot(parking.getId(), unused -> {
+            executor.execute(() -> {
+            localDb.parkingDao().delete(parking);
+            mainHandler.post(() -> {
+                listener.onComplete(null);
+            });
+        });
+        });
+    }
+
+    public void updateParkingLot(Parking parking, OnActionDoneListener listener) {
+        firebaseModel.addParkingLot(parking, unused -> {
+            executor.execute(() -> {
+            localDb.parkingDao().getParking(parking.getId());
+            mainHandler.post(() -> {
+                listener.onComplete(null);
+            });
+        });
+        });
+    }
+
     public void uploadParkingLotImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
         firebaseModel.uploadImage(bitmap, parkingId, listener);
     }
 
     public void getParkingLotsByUserId(String userId, OnActionDoneListener<List> listener) {
         firebaseModel.getParkingLotOfUser(userId, listener);
-//        executor.execute(() -> {
-//            List<Parking> data = localDb.parkingDao().getAll().stream().filter((parking) -> parking.getUserId().equals(userId)).collect(Collectors.toList());
-//            mainHandler.post(() -> {
-//                listener.onComplete(data);
-//            });
-//        });
     }
 
-    public void deleteParkingLot(Parking parking, OnActionDoneListener listener) {
-        executor.execute(() -> {
-            localDb.parkingDao().delete(parking);
-            mainHandler.post(() -> {
-                listener.onComplete(null);
-            });
-        });
+    public void getParkingLot(String parkingId, OnActionDoneListener<Parking> listener) {
+        firebaseModel.getParkingLot(parkingId, listener);
     }
+
 
 }

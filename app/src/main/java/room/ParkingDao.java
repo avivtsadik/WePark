@@ -20,6 +20,9 @@ public interface ParkingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Parking... parkings);
 
+    @Query("select * from Parking where id LIKE :parkingId")
+    LiveData<Parking> getParking(String parkingId);
+
     @Delete
     void delete(Parking parking);
 }

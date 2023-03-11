@@ -49,7 +49,7 @@ public class UserMock {
                 //insert new records into ROOM
                 User user = (User) newUser;
                 localDb.userDao().insertAll(user);
-                if (time < user.getLastUpdated()) {
+                if (user.getLastUpdated() != null && time < user.getLastUpdated()) {
                     time = user.getLastUpdated();
                 }
                 //update local last update
