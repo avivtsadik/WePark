@@ -42,8 +42,25 @@ public class FirebaseModel {
 
     public void getAllParkingLotsSince(Long since, OnActionDoneListener<List<Parking>> listener) {
         db.collection("parkings")
-                .whereGreaterThanOrEqualTo(Parking.LAST_UPDATED,new Timestamp(since,0))
+                .whereGreaterThanOrEqualTo(Parking.LAST_UPDATED, new Timestamp(since, 0))
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<Parking> list = new LinkedList<>();
+                        if (task.isSuccessful()) {
+                            QuerySnapshot jsonsList = task.getResult();
+                            for (DocumentSnapshot json : jsonsList) {
+                                Parking pr = Parking.fromJson(json.getData());
+                                list.add(pr);
+                            }
+                        }
+                        listener.onComplete(list);
+                    }
+                });
+    }
+
+    public void getParkingLotOfUser(String userId, OnActionDoneListener<List> listener) {
+        db.collection("parkings").whereEqualTo("userId", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Parking> list = new LinkedList<>();
@@ -59,21 +76,19 @@ public class FirebaseModel {
         });
     }
 
-    public void getParkingLotOfUser(String userId, OnActionDoneListener<List> listener) {
-        db.collection("parkings").whereEqualTo("userId",userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Parking> list = new LinkedList<>();
-                if (task.isSuccessful()) {
-                    QuerySnapshot jsonsList = task.getResult();
-                    for (DocumentSnapshot json : jsonsList) {
-                        Parking pr = Parking.fromJson(json.getData());
-                        list.add(pr);
-                    }
-                }
-                listener.onComplete(list);
-            }
-        });
+    public void getParkingLot(String parkingId, OnActionDoneListener<Parking> listener) {
+        db.collection("parkings").document(parkingId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                      @Override
+                                                                                      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                          Parking newParking = new Parking();
+                                                                                          DocumentSnapshot jsonsList = task.getResult();
+                                                                                          if (task.isSuccessful()) {
+                                                                                              newParking = Parking.fromJson(jsonsList.getData());
+                                                                                          }
+                                                                                          listener.onComplete(newParking);
+                                                                                      }
+                                                                                  }
+        );
     }
 
     public void addParkingLot(Parking newParking, OnActionDoneListener<Void> listener) {
@@ -139,8 +154,9 @@ public class FirebaseModel {
             }
         });
     }
+
     public void getUser(String userId, OnActionDoneListener<User> listener) {
-        db.collection("users").whereEqualTo("id",userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("users").whereEqualTo("id", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 User user = new User();

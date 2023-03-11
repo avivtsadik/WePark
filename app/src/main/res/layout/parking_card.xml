@@ -28,19 +28,12 @@
                 android:padding="10sp">
 
                 <TextView
-                    android:id="@+id/userIdTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/title_md"
-                    card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
-
-                <TextView
                     android:id="@+id/cityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="City"
                     android:textSize="@dimen/title_md"
-                    card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
+                    card_view:drawableStartCompat="@drawable/ic_baseline_add_location_alt_24" />
 
                 <TextView
                     android:id="@+id/sizeTextView"
@@ -48,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="Size"
                     android:textSize="@dimen/title_md"
-                    card_view:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
+                    card_view:drawableStartCompat="@drawable/ic_baseline_expand_24" />
             </LinearLayout>
 
             <ImageView

@@ -23,7 +23,6 @@ import models.ParkingMock;
 class ParkingListHolder extends RecyclerView.ViewHolder {
     TextView cityTv;
     TextView sizeTv;
-    TextView userIdTv;
     AppCompatImageView editPostButton;
     AppCompatImageView deletePostButton;
     List<Parking> data;
@@ -36,14 +35,12 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
         sizeTv = itemView.findViewById(R.id.sizeTextView);
         editPostButton = itemView.findViewById(R.id.editPostButton);
         deletePostButton = itemView.findViewById(R.id.deletePostButton);
-        userIdTv = itemView.findViewById(R.id.userIdTextView);
         parkingImage = itemView.findViewById(R.id.parkingImage);
     }
 
     public void bind(Parking parking, ParkingListAdapter.OnItemEditListener editListener, ParkingListAdapter.OnItemDeleteListener deleteListener) {
         cityTv.setText(parking.getCity());
         sizeTv.setText(parking.getSize());
-        userIdTv.setText(parking.getUserId());
         if (parking.getAvatarUrl() != "") {
             Picasso.get().load(parking.getAvatarUrl()).placeholder(R.drawable.avatar).into(parkingImage);
         } else {
@@ -52,7 +49,6 @@ class ParkingListHolder extends RecyclerView.ViewHolder {
         if (editPostButton != null) {
             editPostButton.setOnClickListener(view -> {
                 MyPostsFragmentDirections.ActionFragmentMyPostsNavGraphToEditParkingFragment action = MyPostsFragmentDirections.actionFragmentMyPostsNavGraphToEditParkingFragment(parking.getId());
-
                 Navigation.findNavController(view).navigate(action);
             });
         }

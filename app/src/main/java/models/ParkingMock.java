@@ -103,12 +103,10 @@ public class ParkingMock {
 
     public void getParkingLotsByUserId(String userId, OnActionDoneListener<List> listener) {
         firebaseModel.getParkingLotOfUser(userId, listener);
-//        executor.execute(() -> {
-//            List<Parking> data = localDb.parkingDao().getAll().stream().filter((parking) -> parking.getUserId().equals(userId)).collect(Collectors.toList());
-//            mainHandler.post(() -> {
-//                listener.onComplete(data);
-//            });
-//        });
+    }
+
+    public void getParkingLot(String parkingId, OnActionDoneListener<Parking> listener) {
+        firebaseModel.getParkingLot(parkingId, listener);
     }
 
 

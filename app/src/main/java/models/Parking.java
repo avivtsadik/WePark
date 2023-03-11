@@ -27,6 +27,14 @@ public class Parking {
     private String avatarUrl;
     private Long lastUpdated;
 
+    public Parking() {
+        this.id = "";
+        this.userId = "";
+        this.city = "None";
+        this.size = "None";
+        this.avatarUrl = "";
+    }
+
     public Parking(String id, String userId, String city, String size, String avatarUrl) {
         this.id = id;
         this.userId = userId;
