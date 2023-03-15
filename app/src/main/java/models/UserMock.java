@@ -65,4 +65,8 @@ public class UserMock {
         });
     }
 
+    public void getExistingUser(String userId, OnActionDoneListener<User> listener) {
+        firebaseModel.getUser(userId, listener);
+    }
+
 }
