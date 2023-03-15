@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 import models.Interfaces.OnActionDoneListener;
 import room.AppLocalDb;
 import room.AppLocalDbRepository;
+import services.LoginService;
 
 public class ParkingMock {
     public static final ParkingMock _instance = new ParkingMock();
@@ -46,25 +47,32 @@ public class ParkingMock {
     }
 
     public void refreshAllParkingLots() {
-        EventStudentsListLoadingState.setValue(LoadingState.LOADING_PARKING);
         // get local last update
         Long localLastUpdate = Parking.getLocalLastUpdate();
-        // get all updated records from firebase since local update
-        firebaseModel.getAllParkingLotsSince(localLastUpdate, list -> {
-            executor.execute(() -> {
-                Log.d("TAG", " firebase return : " + list.size());
-                Long time = localLastUpdate;
-                for (Parking pr : list) {
-                    //insert new records into ROOM
-                    localDb.parkingDao().insertAll(pr);
-                    if (time < pr.getLastUpdated()) {
-                        time = pr.getLastUpdated();
-                    }
-                }
-                //update local last update
-                Parking.setLocalLastUpdate(time);
-                EventStudentsListLoadingState.postValue(LoadingState.NOT_LOADING_PARKING);
-            });
+
+        firebaseModel.getUser(LoginService.instance().getLoginService().getUserId(), user -> {
+            // get all updated records from firebase since local update
+            if (user.getFavorites().size() != 0) {
+                EventStudentsListLoadingState.setValue(LoadingState.LOADING_PARKING);
+                firebaseModel.getAllParkingLotsSince(user.getFavorites(), localLastUpdate, list -> {
+                    executor.execute(() -> {
+                        Log.d("TAG", " firebase return : " + list.size());
+                        localDb.parkingDao().deleteAll();
+
+                        Long time = localLastUpdate;
+                        for (Parking pr : list) {
+                            //insert new records into ROOM
+                            localDb.parkingDao().insertAll(pr);
+                            if (time < pr.getLastUpdated()) {
+                                time = pr.getLastUpdated();
+                            }
+                        }
+                        //update local last update
+                        Parking.setLocalLastUpdate(time);
+                        EventStudentsListLoadingState.postValue(LoadingState.NOT_LOADING_PARKING);
+                    });
+                });
+            }
         });
     }
 
