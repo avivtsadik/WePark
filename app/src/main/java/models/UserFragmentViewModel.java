@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import services.LoginService;
 
 public class UserFragmentViewModel extends ViewModel {
-    private LiveData<User> user = UserMock.instance().getUser(LoginService.instance().getLoginService().getUserId());
+    private LiveData<User> user = UserMock.instance().getUser();
 
     public LiveData<User> getUser() {
         return user;

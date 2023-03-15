@@ -1,6 +1,5 @@
 package fragments.mainFragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,13 +30,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import activities.OnFragmentInteractionListener;
 import adapters.FavoriteListAdapter;
-import models.ParkingsListFragmentViewModel;
 import models.User;
 import models.UserFragmentViewModel;
 import models.UserMock;
-import services.LoginService;
 
 public class ManageFavoritesFragment extends Fragment {
     private AutoCompleteTextView cityAutoComplete;
@@ -76,12 +71,12 @@ public class ManageFavoritesFragment extends Fragment {
         Button addFavoriteButton = view.findViewById(R.id.add_favorite_btn);
         addFavoriteButton.setOnClickListener(view1 -> {
             String newFavorite = cityAutoComplete.getText().toString();
-            User user = UserMock.instance().getUser(LoginService.instance().getLoginService().getUserId()).getValue();
+            User user = UserMock.instance().getUser().getValue();
             if(newFavorite.isEmpty()) {
                 Toast.makeText(getContext(), "Please select favorite city", Toast.LENGTH_SHORT).show();
             } else if (!user.getFavorites().stream().anyMatch(favorite -> favorite.equals(newFavorite))) {
                 user.getFavorites().add(newFavorite);
-                UserMock.instance().updateFavorites(user, (unused) -> {
+                UserMock.instance().updateUserData(user, (unused) -> {
                     Toast.makeText(getContext(), "Favorite Added Successfully", Toast.LENGTH_SHORT).show();
                 });
             } else {

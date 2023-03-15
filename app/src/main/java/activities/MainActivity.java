@@ -30,6 +30,7 @@ import fragments.mainFragments.HomeFragment;
 import fragments.mainFragments.ManageFavoritesFragment;
 import fragments.mainFragments.MyPostsFragment;
 import fragments.mainFragments.ProfileFragment;
+import models.UserMock;
 import services.LoginService;
 
 import com.google.android.material.navigation.NavigationView;
@@ -86,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
+        });
+
+        UserMock.instance().getUser().observe(this, user -> {
+            if (user != null) {
+                userName.setText(user.getDisplayName());
+            }
         });
     }
 

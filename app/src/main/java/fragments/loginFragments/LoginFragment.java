@@ -21,8 +21,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import java.util.LinkedList;
-
 import activities.MainActivity;
 import activities.OnFragmentInteractionListener;
 import models.Interfaces.OnActionDoneListener;
@@ -146,7 +144,7 @@ public class LoginFragment extends Fragment {
         String userId = LoginService.instance().getLoginService().getUserId();
 
         UserMock.instance().getExistingUser(userId, user -> {
-            UserMock.instance().updateFavorites(user, data -> {
+            UserMock.instance().updateUserData(user, data -> {
                 listener.onComplete(user);
             });
         });

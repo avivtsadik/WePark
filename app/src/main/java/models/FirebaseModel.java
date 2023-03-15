@@ -9,7 +9,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -19,7 +18,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -113,10 +111,10 @@ public class FirebaseModel {
         });
     }
 
-    public void uploadImage(Bitmap bitmap, String parkingId, OnActionDoneListener<String> listener) {
+    public void uploadImage(Bitmap bitmap, String imageId, OnActionDoneListener<String> listener) {
         StorageReference storageRef = storage.getReference();
 
-        StorageReference imageRef = storageRef.child(parkingId + IMAGE_NAME_POSTFIX);
+        StorageReference imageRef = storageRef.child(imageId + IMAGE_NAME_POSTFIX);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -141,7 +139,7 @@ public class FirebaseModel {
         });
     }
 
-    public void updateFavorites(User user, OnActionDoneListener listener) {
+    public void updateUserData(User user, OnActionDoneListener listener) {
         db.collection("users").document(user.getId()).set(user.toJson()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

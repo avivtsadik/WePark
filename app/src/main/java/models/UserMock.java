@@ -1,5 +1,6 @@
 package models;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -11,6 +12,7 @@ import java.util.concurrent.Executors;
 import models.Interfaces.OnActionDoneListener;
 import room.AppLocalDb;
 import room.AppLocalDbRepository;
+import services.LoginService;
 
 public class UserMock {
     public static final UserMock _instance = new UserMock();
@@ -28,7 +30,9 @@ public class UserMock {
 
     }
 
-    public LiveData<User> getUser(String userId) {
+    public LiveData<User> getUser() {
+        String userId = LoginService.instance().getLoginService().getUserId();
+
         if (user == null) {
             user = localDb.userDao().getUser(userId);
             refreshUser(userId);
@@ -58,8 +62,9 @@ public class UserMock {
             });
         });
     }
-    public void updateFavorites(User user, OnActionDoneListener<Void> listener) {
-        firebaseModel.updateFavorites(user, (Void) -> {
+
+    public void updateUserData(User user, OnActionDoneListener<Void> listener) {
+        firebaseModel.updateUserData(user, (Void) -> {
             refreshUser(user.getId());
             listener.onComplete(null);
         });
@@ -67,6 +72,10 @@ public class UserMock {
 
     public void getExistingUser(String userId, OnActionDoneListener<User> listener) {
         firebaseModel.getUser(userId, listener);
+    }
+
+    public void uploadProfileImage(Bitmap bitmap, String userId, OnActionDoneListener<String> listener) {
+        firebaseModel.uploadImage(bitmap, userId, listener);
     }
 
 }

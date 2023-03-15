@@ -42,6 +42,7 @@ public class Parking {
         this.size = size;
         this.avatarUrl = avatarUrl;
     }
+
     static final String ID = "id";
     static final String CITY = "city";
     static final String SIZE = "size";
@@ -57,10 +58,10 @@ public class Parking {
         String userId = (String) json.get(USER_ID);
         String avatarUrl = (String) json.get(AVATAR_URL);
         Parking pr = new Parking(id, userId, city, size, avatarUrl);
-        try{
+        try {
             Timestamp time = (Timestamp) json.get(LAST_UPDATED);
             pr.setLastUpdated(time.getSeconds());
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         return pr;
@@ -74,7 +75,7 @@ public class Parking {
     public static void setLocalLastUpdate(Long time) {
         SharedPreferences sharedPref = WeParkApplication.getAppContext().getSharedPreferences("TAG", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putLong(LOCAL_LAST_UPDATED,time);
+        editor.putLong(LOCAL_LAST_UPDATED, time);
         editor.commit();
     }
 
@@ -134,6 +135,6 @@ public class Parking {
     }
 
     public void setLastUpdated(Long time) {
-        this.lastUpdated =  time;
+        this.lastUpdated = time;
     }
 }

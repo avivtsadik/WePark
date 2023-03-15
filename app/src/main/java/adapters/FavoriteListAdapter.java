@@ -14,10 +14,8 @@ import com.example.wepark.R;
 
 import java.util.List;
 
-import models.Parking;
 import models.User;
 import models.UserMock;
-import services.LoginService;
 
 
 class FavoriteListHolder extends RecyclerView.ViewHolder {
@@ -34,9 +32,9 @@ class FavoriteListHolder extends RecyclerView.ViewHolder {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = UserMock.instance().getUser(LoginService.instance().getLoginService().getUserId()).getValue();
+                User user = UserMock.instance().getUser().getValue();
                 user.getFavorites().removeIf(favorite -> favorite.equals(textView.getText().toString()));
-                UserMock.instance().updateFavorites(user, (unused) -> {
+                UserMock.instance().updateUserData(user, (unused) -> {
                     Toast.makeText(view.getContext(), "Favorite removed successfully", Toast.LENGTH_SHORT).show();
                 });
             }
