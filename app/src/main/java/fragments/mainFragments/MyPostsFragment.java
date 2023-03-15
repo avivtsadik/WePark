@@ -43,15 +43,20 @@ public class MyPostsFragment extends Fragment {
         RecyclerView list = view.findViewById(R.id.myPostsList);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        List<Parking> data = viewModel.getParkingList().getValue().stream().filter(parking -> parking.getUserId().equals(userId)).collect(Collectors.toList());
         adapter = new ParkingListAdapter(getLayoutInflater(), new LinkedList(), R.layout.parking_card_editable);
 
         adapter.setOnItemEditListener(() -> {
             ParkingMock.instance().refreshAllParkingLots();
+            ParkingMock.instance().getParkingLotsByUserId(userId, data -> {
+                adapter.setData(data);
+            });
         });
 
         adapter.setOnItemDeleteListener(() -> {
             ParkingMock.instance().refreshAllParkingLots();
+            ParkingMock.instance().getParkingLotsByUserId(userId, data -> {
+                adapter.setData(data);
+            });
         });
 
         list.setAdapter(adapter);
