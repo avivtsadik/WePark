@@ -85,6 +85,7 @@ public class EditParkingFragment extends Fragment {
         cityAutoComplete = view.findViewById(R.id.autoCompleteCity);
         imageView = view.findViewById(R.id.imageView);
         Button saveParkingBtn = view.findViewById(R.id.savebtn);
+        Button cancelbtn = view.findViewById(R.id.cancelbtn);
 
         parkingId = EditParkingFragmentArgs.fromBundle(getArguments()).getParkingId();
 
@@ -108,6 +109,10 @@ public class EditParkingFragment extends Fragment {
         removeImageButton.setOnClickListener(view2 -> {
             imageView.setImageBitmap(null);
             isUserAddImage = false;
+        });
+
+        cancelbtn.setOnClickListener(view1 -> {
+            Navigation.findNavController(view).popBackStack();
         });
 
         saveParkingBtn.setOnClickListener(view1 -> {
