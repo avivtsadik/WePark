@@ -19,6 +19,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,30 +34,25 @@ public class FirebaseModel {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
 
-        FirebaseFirestoreSettings settings = new
-                FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder().setPersistenceEnabled(false).build();
         db.setFirestoreSettings(settings);
     }
 
-    public void getAllParkingLotsSince(Long since, OnActionDoneListener<List<Parking>> listener) {
-        db.collection("parkings")
-                .whereGreaterThanOrEqualTo(Parking.LAST_UPDATED, new Timestamp(since, 0))
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        List<Parking> list = new LinkedList<>();
-                        if (task.isSuccessful()) {
-                            QuerySnapshot jsonsList = task.getResult();
-                            for (DocumentSnapshot json : jsonsList) {
-                                Parking pr = Parking.fromJson(json.getData());
-                                list.add(pr);
-                            }
-                        }
-                        listener.onComplete(list);
+    public void getAllParkingLotsSince(List<String> favorites, Long since, OnActionDoneListener<List<Parking>> listener) {
+        db.collection("parkings").whereIn("city", favorites).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Parking> list = new LinkedList<>();
+                if (task.isSuccessful()) {
+                    QuerySnapshot jsonsList = task.getResult();
+                    for (DocumentSnapshot json : jsonsList) {
+                        Parking pr = Parking.fromJson(json.getData());
+                        list.add(pr);
                     }
-                });
+                }
+                listener.onComplete(list);
+            }
+        });
     }
 
     public void getParkingLotOfUser(String userId, OnActionDoneListener<List> listener) {
@@ -78,17 +74,16 @@ public class FirebaseModel {
 
     public void getParkingLot(String parkingId, OnActionDoneListener<Parking> listener) {
         db.collection("parkings").document(parkingId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                                      @Override
-                                                                                      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                                          Parking newParking = new Parking();
-                                                                                          DocumentSnapshot jsonsList = task.getResult();
-                                                                                          if (task.isSuccessful()) {
-                                                                                              newParking = Parking.fromJson(jsonsList.getData());
-                                                                                          }
-                                                                                          listener.onComplete(newParking);
-                                                                                      }
-                                                                                  }
-        );
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                Parking newParking = new Parking();
+                DocumentSnapshot jsonsList = task.getResult();
+                if (task.isSuccessful()) {
+                    newParking = Parking.fromJson(jsonsList.getData());
+                }
+                listener.onComplete(newParking);
+            }
+        });
     }
 
     public void addParkingLot(Parking newParking, OnActionDoneListener<Void> listener) {

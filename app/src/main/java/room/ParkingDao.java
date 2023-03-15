@@ -23,6 +23,9 @@ public interface ParkingDao {
     @Query("select * from Parking where id LIKE :parkingId")
     LiveData<Parking> getParking(String parkingId);
 
+    @Query("DELETE FROM Parking")
+    void deleteAll();
+
     @Delete
     void delete(Parking parking);
 }

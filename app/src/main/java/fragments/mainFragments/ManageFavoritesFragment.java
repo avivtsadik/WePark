@@ -90,7 +90,9 @@ public class ManageFavoritesFragment extends Fragment {
         });
 
         viewModel.getUser().observe(getViewLifecycleOwner(), updatedUser -> {
-            adapter.setData(updatedUser.getFavorites());
+            if (updatedUser != null) {
+                adapter.setData(updatedUser.getFavorites());
+            }
         });
         return view;
     }
