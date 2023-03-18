@@ -54,15 +54,18 @@ public class ParkingMock {
             // get all updated records from firebase since local update
             if (user.getFavorites().size() != 0) {
                 EventStudentsListLoadingState.setValue(LoadingState.LOADING_PARKING);
-                firebaseModel.getAllParkingLotsSince(user.getFavorites(), localLastUpdate, list -> {
+                firebaseModel.getFavoriteParkingLotsSince(user.getFavorites(), localLastUpdate, list -> {
                     executor.execute(() -> {
                         Log.d("TAG", " firebase return : " + list.size());
-                        localDb.parkingDao().deleteAll();
-
                         Long time = localLastUpdate;
+
                         for (Parking pr : list) {
-                            //insert new records into ROOM
-                            localDb.parkingDao().insertAll(pr);
+                            if (pr.getMark().equals("D")) {
+                                localDb.parkingDao().delete(pr);
+                            } else {
+                                localDb.parkingDao().insertAll(pr);
+                            }
+
                             if (time < pr.getLastUpdated()) {
                                 time = pr.getLastUpdated();
                             }

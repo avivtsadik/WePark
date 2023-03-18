@@ -25,6 +25,7 @@ public class Parking {
     private String city;
     private String size;
     private String avatarUrl;
+    private String mark;
     private Long lastUpdated;
 
     public Parking() {
@@ -32,6 +33,7 @@ public class Parking {
         this.userId = "";
         this.city = "None";
         this.size = "None";
+        this.mark = "C";
         this.avatarUrl = "";
     }
 
@@ -40,11 +42,22 @@ public class Parking {
         this.userId = userId;
         this.city = city;
         this.size = size;
+        this.mark = "C";
         this.avatarUrl = avatarUrl;
+    }
+
+    public Parking(String id, String userId, String city, String size, String avatarUrl, String mark) {
+        this.id = id;
+        this.userId = userId;
+        this.city = city;
+        this.size = size;
+        this.avatarUrl = avatarUrl;
+        this.mark = mark;
     }
 
     static final String ID = "id";
     static final String CITY = "city";
+    static final String MARK = "mark";
     static final String SIZE = "size";
     static final String USER_ID = "userId";
     static final String AVATAR_URL = "avatarUrl";
@@ -54,10 +67,11 @@ public class Parking {
     public static Parking fromJson(Map<String, Object> json) {
         String id = (String) json.get(ID);
         String city = (String) json.get(CITY);
+        String mark = (String) json.get(MARK);
         String size = (String) json.get(SIZE);
         String userId = (String) json.get(USER_ID);
         String avatarUrl = (String) json.get(AVATAR_URL);
-        Parking pr = new Parking(id, userId, city, size, avatarUrl);
+        Parking pr = new Parking(id, userId, city, size, avatarUrl, mark);
         try {
             Timestamp time = (Timestamp) json.get(LAST_UPDATED);
             pr.setLastUpdated(time.getSeconds());
@@ -84,6 +98,7 @@ public class Parking {
         json.put(ID, getId());
         json.put(CITY, getCity());
         json.put(SIZE, getSize());
+        json.put(MARK, getMark());
         json.put(USER_ID, getUserId());
         json.put(AVATAR_URL, getAvatarUrl());
         json.put(LAST_UPDATED, FieldValue.serverTimestamp());
@@ -136,5 +151,13 @@ public class Parking {
 
     public void setLastUpdated(Long time) {
         this.lastUpdated = time;
+    }
+
+    public String getMark() {
+        return mark;
+    }
+
+    public void setMark(String mark) {
+        this.mark = mark;
     }
 }
