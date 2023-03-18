@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -36,21 +37,24 @@ public class FirebaseModel {
         db.setFirestoreSettings(settings);
     }
 
-    public void getAllParkingLotsSince(List<String> favorites, Long since, OnActionDoneListener<List<Parking>> listener) {
-        db.collection("parkings").whereIn("city", favorites).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Parking> list = new LinkedList<>();
-                if (task.isSuccessful()) {
-                    QuerySnapshot jsonsList = task.getResult();
-                    for (DocumentSnapshot json : jsonsList) {
-                        Parking pr = Parking.fromJson(json.getData());
-                        list.add(pr);
+    public void getFavoriteParkingLotsSince(List<String> favorites, Long since, OnActionDoneListener<List<Parking>> listener) {
+        db.collection("parkings")
+                .whereIn("city", favorites)
+                .whereGreaterThanOrEqualTo(Parking.LAST_UPDATED, new Timestamp(since, 0)).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<Parking> list = new LinkedList<>();
+                        if (task.isSuccessful()) {
+                            QuerySnapshot jsonsList = task.getResult();
+                            for (DocumentSnapshot json : jsonsList) {
+                                Parking pr = Parking.fromJson(json.getData());
+                                list.add(pr);
+                            }
+                        }
+                        listener.onComplete(list);
                     }
-                }
-                listener.onComplete(list);
-            }
-        });
+                });
     }
 
     public void getParkingLotOfUser(String userId, OnActionDoneListener<List> listener) {
