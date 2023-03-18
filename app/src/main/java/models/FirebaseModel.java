@@ -54,7 +54,7 @@ public class FirebaseModel {
     }
 
     public void getParkingLotOfUser(String userId, OnActionDoneListener<List> listener) {
-        db.collection("parkings").whereEqualTo("userId", userId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("parkings").whereEqualTo("userId", userId).whereNotEqualTo("mark", "D").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Parking> list = new LinkedList<>();
@@ -94,7 +94,7 @@ public class FirebaseModel {
     }
 
     public void removeParkingLot(String parkingId, OnActionDoneListener<Void> listener) {
-        db.collection("parkings").document(parkingId).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("parkings").document(parkingId).update("mark", "D").addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void task) {
                 listener.onComplete(null);

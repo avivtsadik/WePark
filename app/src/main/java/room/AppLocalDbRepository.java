@@ -8,7 +8,7 @@ import models.Parking;
 import models.User;
 import models.UserConverter;
 
-@Database(entities = {Parking.class,User.class}, version = 11)
+@Database(entities = {Parking.class,User.class}, version = 12)
 @TypeConverters({UserConverter.class})
 public abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract ParkingDao parkingDao();

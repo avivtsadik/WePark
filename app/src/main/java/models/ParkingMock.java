@@ -57,12 +57,15 @@ public class ParkingMock {
                 firebaseModel.getAllParkingLotsSince(user.getFavorites(), localLastUpdate, list -> {
                     executor.execute(() -> {
                         Log.d("TAG", " firebase return : " + list.size());
-                        localDb.parkingDao().deleteAll();
-
                         Long time = localLastUpdate;
+
                         for (Parking pr : list) {
-                            //insert new records into ROOM
-                            localDb.parkingDao().insertAll(pr);
+                            if (pr.getMark().equals("D")) {
+                                localDb.parkingDao().delete(pr);
+                            } else {
+                                localDb.parkingDao().insertAll(pr);
+                            }
+
                             if (time < pr.getLastUpdated()) {
                                 time = pr.getLastUpdated();
                             }
