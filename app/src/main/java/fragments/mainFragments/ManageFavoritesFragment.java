@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 
 import adapters.FavoriteListAdapter;
 import models.City;
-import models.CityFragmentViewModel;
 import models.CityMock;
 import models.User;
 import models.UserFragmentViewModel;
@@ -36,7 +35,6 @@ import models.UserMock;
 public class ManageFavoritesFragment extends Fragment {
     private AutoCompleteTextView cityAutoComplete;
     private UserFragmentViewModel userViewModel;
-    private CityFragmentViewModel cityViewModel;
 
     public ManageFavoritesFragment() {
         // Required empty public constructor
@@ -65,7 +63,7 @@ public class ManageFavoritesFragment extends Fragment {
         cityAutoComplete.setDropDownHeight(600);
         cityAutoComplete.setAdapter(cityAutoCompleteAdapter);
 
-        LiveData<List<City>> citiesLive = cityViewModel.getCityList();
+        LiveData<List<City>> citiesLive = CityMock.instance.getCities();
         citiesLive.observe(getViewLifecycleOwner(), citiesList -> {
             List<String> cityNames = citiesList.stream().map(City::getName).collect(Collectors.toList());
             ArrayAdapter<String> cityAutoCompleteAdapter2 = new ArrayAdapter(getContext(), R.layout.list_item, cityNames);

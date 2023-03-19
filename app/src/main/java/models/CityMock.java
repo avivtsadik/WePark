@@ -17,15 +17,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CityMock {
-    final public static CityMock instance = new CityMock();
+    public static final CityMock instance = new CityMock();
 
-    public static CityMock instance() {
-        return instance;
-    }
-
-    final String BASE_URL = "https://data.gov.il/api/3/action/datastore_search";
+    final String BASE_URL = "https://data.gov.il/api/3/action/datastore_search/";
     Retrofit retrofit;
-
     CityApi cityApi;
 
     public CityMock() {
