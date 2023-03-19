@@ -26,21 +26,15 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.wepark.R;
 
-import fragments.mainFragments.HomeFragment;
-import fragments.mainFragments.ManageFavoritesFragment;
-import fragments.mainFragments.MyPostsFragment;
-import fragments.mainFragments.ProfileFragment;
 import models.UserMock;
 import services.LoginService;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    AppBarConfiguration appBarConfiguration;
     NavController navController;
     Toolbar toolbar;
     TextView logoutTextView;

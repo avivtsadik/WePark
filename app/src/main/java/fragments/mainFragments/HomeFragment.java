@@ -24,11 +24,11 @@ import activities.OnFragmentInteractionListener;
 import adapters.ParkingListAdapter;
 import models.LoadingState;
 import models.ParkingMock;
-import models.ParkingsListFragmentViewModel;
+import models.ParkingListFragmentViewModel;
 
 public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private ParkingsListFragmentViewModel viewModel;
+    private ParkingListFragmentViewModel viewModel;
     private ParkingListAdapter adapter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        viewModel = new ViewModelProvider(this).get(ParkingsListFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ParkingListFragmentViewModel.class);
     }
     @Override
     public void onAttach(Activity activity) {

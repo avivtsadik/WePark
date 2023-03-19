@@ -14,21 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wepark.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import adapters.ParkingListAdapter;
-import models.Parking;
 import models.ParkingMock;
-import models.ParkingsListFragmentViewModel;
+import models.ParkingListFragmentViewModel;
 import services.LoginService;
 
 public class MyPostsFragment extends Fragment {
     private ParkingListAdapter adapter;
-    ParkingsListFragmentViewModel viewModel;
+    ParkingListFragmentViewModel viewModel;
 
     public MyPostsFragment() {
         // Required empty public constructor
@@ -71,6 +67,6 @@ public class MyPostsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        viewModel = new ViewModelProvider(this).get(ParkingsListFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ParkingListFragmentViewModel.class);
     }
 }
