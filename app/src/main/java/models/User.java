@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import application.WeParkApplication;
+import services.LoginService;
 
 @Entity
 @TypeConverters({UserConverter.class})
@@ -39,8 +40,8 @@ public class User {
         this.favorites = favorites;
     }
     public User() {
-        this.id = "";
-        this.displayName = "";
+        this.id = LoginService.instance().getLoginService().getUserId();
+        this.displayName = LoginService.instance().getLoginService().getUserName();
         this.favorites = new LinkedList<>();
     }
 

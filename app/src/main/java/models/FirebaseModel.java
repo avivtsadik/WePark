@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import models.Interfaces.OnActionDoneListener;
+import services.LoginService;
 
 public class FirebaseModel {
     FirebaseFirestore db;
@@ -157,6 +158,7 @@ public class FirebaseModel {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 User user = new User();
+
                 if (task.isSuccessful()) {
                     QuerySnapshot jsonsList = task.getResult();
                     for (DocumentSnapshot json : jsonsList) {

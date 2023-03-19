@@ -1,12 +1,12 @@
 package fragments.mainFragments;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,24 +21,22 @@ import android.widget.Toast;
 
 import com.example.wepark.R;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import adapters.FavoriteListAdapter;
+import models.City;
+import models.CityFragmentViewModel;
+import models.CityMock;
 import models.User;
 import models.UserFragmentViewModel;
 import models.UserMock;
 
 public class ManageFavoritesFragment extends Fragment {
     private AutoCompleteTextView cityAutoComplete;
-    private String[] citiesArray;
-    private UserFragmentViewModel viewModel;
+    private UserFragmentViewModel userViewModel;
+    private CityFragmentViewModel cityViewModel;
 
     public ManageFavoritesFragment() {
         // Required empty public constructor
@@ -47,7 +45,6 @@ public class ManageFavoritesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        citiesArray = getCities();
     }
 
     @Override
@@ -64,15 +61,22 @@ public class ManageFavoritesFragment extends Fragment {
         FavoriteListAdapter adapter = new FavoriteListAdapter(getLayoutInflater(), new LinkedList());
         list.setAdapter(adapter);
 
-        ArrayAdapter<String> cityAutoCompleteAdapter = new ArrayAdapter(getContext(), R.layout.list_item, citiesArray);
+        ArrayAdapter<String> cityAutoCompleteAdapter = new ArrayAdapter(getContext(), R.layout.list_item, new LinkedList());
         cityAutoComplete.setDropDownHeight(600);
         cityAutoComplete.setAdapter(cityAutoCompleteAdapter);
+
+        LiveData<List<City>> citiesLive = cityViewModel.getCityList();
+        citiesLive.observe(getViewLifecycleOwner(), citiesList -> {
+            List<String> cityNames = citiesList.stream().map(City::getName).collect(Collectors.toList());
+            ArrayAdapter<String> cityAutoCompleteAdapter2 = new ArrayAdapter(getContext(), R.layout.list_item, cityNames);
+            cityAutoComplete.setAdapter(cityAutoCompleteAdapter2);
+        });
 
         Button addFavoriteButton = view.findViewById(R.id.add_favorite_btn);
         addFavoriteButton.setOnClickListener(view1 -> {
             String newFavorite = cityAutoComplete.getText().toString();
             User user = UserMock.instance().getUser().getValue();
-            if(newFavorite.isEmpty()) {
+            if (newFavorite.isEmpty()) {
                 Toast.makeText(getContext(), "Please select favorite city", Toast.LENGTH_SHORT).show();
             } else if (!user.getFavorites().stream().anyMatch(favorite -> favorite.equals(newFavorite))) {
                 user.getFavorites().add(newFavorite);
@@ -84,7 +88,7 @@ public class ManageFavoritesFragment extends Fragment {
             }
         });
 
-        viewModel.getUser().observe(getViewLifecycleOwner(), updatedUser -> {
+        userViewModel.getUser().observe(getViewLifecycleOwner(), updatedUser -> {
             if (updatedUser != null) {
                 adapter.setData(updatedUser.getFavorites());
             }
@@ -92,30 +96,9 @@ public class ManageFavoritesFragment extends Fragment {
         return view;
     }
 
-    public String[] getCities() {
-        List<String> items = new ArrayList();
-        AssetManager am = getContext().getAssets();
-        try {
-            InputStream inputStream = am.open("cities.txt");
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-            String str_line;
-
-            while ((str_line = buffer.readLine()) != null) {
-                str_line = str_line.trim();
-                if ((str_line.length() != 0)) {
-                    items.add(str_line);
-                }
-            }
-
-            return items.toArray(new String[items.size()]);
-
-        } catch (IOException e) {
-            return new String[0];
-        }
-    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        viewModel = new ViewModelProvider(this).get(UserFragmentViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserFragmentViewModel.class);
     }
 }
