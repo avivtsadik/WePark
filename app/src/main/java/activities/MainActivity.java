@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import models.UserMock;
 import services.LoginService;
 
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     Toolbar toolbar;
     TextView logoutTextView;
     TextView userName;
+    ImageView profileImage;
     TextView userEmail;
 
     @Override
@@ -61,9 +64,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         View navigationHeader = navigationView.getHeaderView(0);
         userName = navigationHeader.findViewById(R.id.userName);
+        profileImage = navigationHeader.findViewById(R.id.profile_image);
         userEmail = navigationHeader.findViewById(R.id.userEmail);
 
         userName.setText(LoginService.instance().getLoginService().getUserName());
+//        profileImage.setImageResource(R.drawable.avatar);
         userEmail.setText(LoginService.instance().getLoginService().getUserEmail());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -86,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         UserMock.instance().getUser().observe(this, user -> {
             if (user != null) {
                 userName.setText(user.getDisplayName());
+                Picasso.get().load(user.getAvatarUrl()).placeholder(R.drawable.avatar).into(profileImage);
             }
         });
     }
