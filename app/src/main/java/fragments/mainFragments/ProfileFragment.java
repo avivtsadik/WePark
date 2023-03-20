@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wepark.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -69,14 +70,13 @@ public class ProfileFragment extends Fragment {
 
         addImageButton = view.findViewById(R.id.addImageButton);
         removeImageButton = view.findViewById(R.id.removeImageButton);
-
+        imageView = view.findViewById(R.id.imageView);
         saveButton = view.findViewById(R.id.saveButton);
         cancelButton = view.findViewById(R.id.cancelButton);
-
         displayNameTextView = view.findViewById(R.id.displayNameTextView);
-
         UserMock.instance().getUser().observe(getViewLifecycleOwner(), user -> {
             this.user = user;
+            refreshFrame();
             displayNameTextView.setText(user.getDisplayName());
         });
 
@@ -97,22 +97,22 @@ public class ProfileFragment extends Fragment {
                 String userId = LoginService.instance().getLoginService().getUserId();
                 user.setDisplayName(displayNameTextView.getText().toString());
 
-//                imageView.setDrawingCacheEnabled(true);
-//                imageView.buildDrawingCache();
-//                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-//
-//                UserMock.instance().uploadProfileImage(bitmap, userId, new OnActionDoneListener<String>() {
-//                    @Override
-//                    public void onComplete(String uri) {
-//                        if (uri != null) {
-//                            user.setAvatarUrl(uri);
-//                        }
+                imageView.setDrawingCacheEnabled(true);
+                imageView.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+
+                UserMock.instance().uploadProfileImage(bitmap, userId, new OnActionDoneListener<String>() {
+                    @Override
+                    public void onComplete(String uri) {
+                        if (uri != null) {
+                            user.setAvatarUrl(uri);
+                        }
                         UserMock.instance().updateUserData(user, (unused) -> {
                             Toast.makeText(getContext(), "Profiled saved", Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(view).popBackStack();
                         });
-//                    }
-//                });
+                    }
+                });
             } catch (Exception e) {
                 Toast.makeText(getContext(), "Missing values", Toast.LENGTH_SHORT).show();
             }
@@ -120,5 +120,8 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+    public void refreshFrame() {
+        Picasso.get().load(user.getAvatarUrl()).placeholder(R.drawable.avatar).into(imageView);
     }
 }

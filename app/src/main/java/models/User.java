@@ -11,6 +11,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.example.wepark.R;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 
@@ -30,18 +31,21 @@ public class User {
     @NonNull
     private String id;
     private String displayName;
+    private String avatarUrl;
     private Long lastUpdated;
     private List<String> favorites;
     //    @ColumnInfo(name = "favorites")
 
-    public User(String id, String displayName, List<String> favorites) {
+    public User(String id, String displayName,String avatarUrl, List<String> favorites) {
         this.id = id;
         this.displayName = displayName;
+        this.avatarUrl = avatarUrl;
         this.favorites = favorites;
     }
     public User() {
         this.id = LoginService.instance().getLoginService().getUserId();
         this.displayName = LoginService.instance().getLoginService().getUserName();
+        this.avatarUrl = "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png";
         this.favorites = new LinkedList<>();
     }
 
@@ -57,8 +61,16 @@ public class User {
         return displayName;
     }
 
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public List<String> getFavorites() {
@@ -71,6 +83,7 @@ public class User {
 
     static final String ID = "id";
     static final String DISPLAY_NAME = "displayName";
+    static final String AVATAR_URL = "avatarUrl";
     static final String FAVORITES = "favorites";
     static final String LAST_UPDATED = "lastUpdated";
     static final String LOCAL_LAST_UPDATED = "favorites_local_last_update";
@@ -79,6 +92,7 @@ public class User {
         Map<String, Object> json = new HashMap<>();
         json.put(ID, getId());
         json.put(DISPLAY_NAME, getDisplayName());
+        json.put(AVATAR_URL, getAvatarUrl());
         json.put(FAVORITES, getFavorites());
         json.put(LAST_UPDATED, FieldValue.serverTimestamp());
         return json;
@@ -96,8 +110,9 @@ public class User {
     public static User fromJson(Map<String, Object> json) {
         String id = (String) json.get(ID);
         String display = (String) json.get(DISPLAY_NAME);
+        String avatar = (String) json.get(AVATAR_URL);
         List<String> favorites = (List<String>) json.get(FAVORITES);
-        User pr = new User(id, display, favorites);
+        User pr = new User(id, display,avatar, favorites);
         try {
             Timestamp time = (Timestamp) json.get(LAST_UPDATED);
             pr.setLastUpdated(time.getSeconds());
