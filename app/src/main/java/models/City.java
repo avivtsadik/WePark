@@ -2,10 +2,9 @@ package models;
 
 public class City {
 
-    private String _id;
-    private String name;
+    private String recordid;
 
-    public String getName() {
-        return name;
+    public String getCity() {
+        return recordid;
     }
 }

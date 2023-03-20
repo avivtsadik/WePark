@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CityMock {
     public static final CityMock instance = new CityMock();
 
-    final String BASE_URL = "https://data.gov.il/api/3/action/datastore_search/";
+    final String BASE_URL = "https://data.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000%40public&q=&sort=name&facet=feature_code&facet=cou_name_en&facet=timezone&refine.cou_name_en=Israel";
     Retrofit retrofit;
     CityApi cityApi;
 
