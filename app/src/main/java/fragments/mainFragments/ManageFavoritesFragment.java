@@ -65,7 +65,7 @@ public class ManageFavoritesFragment extends Fragment {
 
         LiveData<List<City>> citiesLive = CityMock.instance.getCities();
         citiesLive.observe(getViewLifecycleOwner(), citiesList -> {
-            List<String> cityNames = citiesList.stream().map(City::getCity).collect(Collectors.toList());
+            List<String> cityNames = citiesList.stream().map(City::getName).collect(Collectors.toList());
             ArrayAdapter<String> cityAutoCompleteAdapter2 = new ArrayAdapter(getContext(), R.layout.list_item, cityNames);
             cityAutoComplete.setAdapter(cityAutoCompleteAdapter2);
         });

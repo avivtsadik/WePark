@@ -1,10 +1,14 @@
 package models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class City {
+    @SerializedName("alternate_names")
+    @Expose
+    String asciiName;
 
-    private String recordid;
-
-    public String getCity() {
-        return recordid;
+    public String getName() {
+        return asciiName;
     }
 }

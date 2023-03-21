@@ -1,18 +1,20 @@
 package models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CitiesResult {
     @SerializedName("records")
-    List<City> cities;
+    @Expose
+    ArrayList<City> records;
 
-    public List<City> getCities() {
-        return cities;
+    public ArrayList<City> getCities() {
+        return records;
     }
 
-    public void setCities(List<City> cities) {
-        this.cities = cities;
+    public void setCities(ArrayList<City> cities) {
+        this.records = cities;
     }
 }

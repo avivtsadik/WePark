@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CityMock {
     public static final CityMock instance = new CityMock();
 
-    final String BASE_URL = "https://data.opendatasoft.com/api/records/1.0/search/?dataset=geonames-all-cities-with-a-population-1000%40public&q=&sort=name&facet=feature_code&facet=cou_name_en&facet=timezone&refine.cou_name_en=Israel";
+    final String BASE_URL = "https://data.opendatasoft.com/";
     Retrofit retrofit;
     CityApi cityApi;
 
