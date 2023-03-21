@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import activities.MainActivity;
 import activities.OnFragmentInteractionListener;
 import models.Interfaces.OnActionDoneListener;
+import models.ParkingMock;
 import models.User;
 import models.UserMock;
 import services.GoogleLoginService;
@@ -146,6 +147,7 @@ public class LoginFragment extends Fragment {
         UserMock.instance().getExistingUser(userId, user -> {
             UserMock.instance().updateUserData(user, data -> {
                 listener.onComplete(user);
+                ParkingMock.instance().refreshAllParkingLots();
             });
         });
     }

@@ -20,6 +20,6 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(User... users);
 
-    @Delete
-    void delete(User user);
+    @Query("DELETE FROM User")
+    void deleteAll();
 }

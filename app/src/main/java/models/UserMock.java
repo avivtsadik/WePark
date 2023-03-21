@@ -78,4 +78,11 @@ public class UserMock {
         firebaseModel.uploadImage(bitmap, userId, listener);
     }
 
+    public void clearUserCache(OnActionDoneListener listener) {
+        executor.execute(() -> {
+            localDb.userDao().deleteAll();
+            listener.onComplete(null);
+        });
+    }
+
 }
