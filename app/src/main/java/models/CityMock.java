@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CityMock {
     public static final CityMock instance = new CityMock();
 
-    final String BASE_URL = "https://data.opendatasoft.com/";
+    final String BASE_URL = "https://maps.googleapis.com/";
     Retrofit retrofit;
     CityApi cityApi;
 

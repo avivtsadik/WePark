@@ -4,11 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class City {
-    @SerializedName("alternate_names")
+    @SerializedName("name")
     @Expose
-    String asciiName;
+    String name;
 
     public String getName() {
-        return asciiName;
+        return name;
     }
 }

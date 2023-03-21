@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.wepark.R;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +45,26 @@ public class ManageFavoritesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    private void removeNonEnglishCityNames(List<String> cityNames) {
+        Iterator<String> iter = cityNames.iterator();
+        while (iter.hasNext()) {
+            String cityName = iter.next();
+            if (!hasEnglishChars(cityName)) {
+                iter.remove();
+            }
+        }
+    }
 
+    private boolean hasEnglishChars(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.ARABIC
+                    || Character.UnicodeBlock.of(c) == Character.UnicodeBlock.HEBREW) {
+                return false;
+            }
+        }
+        return true;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,9 +86,11 @@ public class ManageFavoritesFragment extends Fragment {
         LiveData<List<City>> citiesLive = CityMock.instance.getCities();
         citiesLive.observe(getViewLifecycleOwner(), citiesList -> {
             List<String> cityNames = citiesList.stream().map(City::getName).collect(Collectors.toList());
+            removeNonEnglishCityNames(cityNames);
             ArrayAdapter<String> cityAutoCompleteAdapter2 = new ArrayAdapter(getContext(), R.layout.list_item, cityNames);
             cityAutoComplete.setAdapter(cityAutoCompleteAdapter2);
         });
+
 
         Button addFavoriteButton = view.findViewById(R.id.add_favorite_btn);
         addFavoriteButton.setOnClickListener(view1 -> {
