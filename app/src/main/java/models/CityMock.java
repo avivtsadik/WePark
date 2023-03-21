@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CityMock {
     public static final CityMock instance = new CityMock();
 
-    final String BASE_URL = "https://data.gov.il/api/3/action/datastore_search/";
+    final String BASE_URL = "https://maps.googleapis.com/";
     Retrofit retrofit;
     CityApi cityApi;
 

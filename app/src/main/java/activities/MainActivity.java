@@ -1,7 +1,9 @@
 package activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,6 +46,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     TextView userName;
     ImageView profileImage;
     TextView userEmail;
+
+//    @Nullable
+//    @Override
+//    public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+//        userName.setText(user.getDisplayName());
+//        Picasso.get().load(user.getAvatarUrl()).placeholder(R.drawable.avatar).into(profileImage);
+//        return super.onCreateView(name, context, attrs);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

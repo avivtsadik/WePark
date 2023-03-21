@@ -1,9 +1,12 @@
 package models;
 
-public class City {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    private String _id;
-    private String name;
+public class City {
+    @SerializedName("name")
+    @Expose
+    String name;
 
     public String getName() {
         return name;
