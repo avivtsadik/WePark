@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.navigation.Navigation;
 
 import com.example.wepark.R;
@@ -31,10 +32,14 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import models.City;
+import models.CityMock;
 import models.Interfaces.OnActionDoneListener;
 import models.Parking;
 import models.ParkingMock;
@@ -48,7 +53,6 @@ public class EditParkingFragment extends Fragment {
     private AutoCompleteTextView cityAutoComplete;
     private ImageView imageView;
     private Parking parking;
-    private String[] citiesArray;
     ActivityResultLauncher cameraAppLauncher;
     ArrayAdapter<CharSequence> sizeSpinnerAdapter;
     Boolean isUserAddImage;
@@ -61,7 +65,6 @@ public class EditParkingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isUserAddImage = false;
-        citiesArray = getCities();
         cameraAppLauncher = registerForActivityResult(new
                 ActivityResultContracts.TakePicturePreview(), new
                 ActivityResultCallback<Bitmap>() {
@@ -72,7 +75,26 @@ public class EditParkingFragment extends Fragment {
                     }
                 });
     }
+    private void removeNonEnglishCityNames(List<String> cityNames) {
+        Iterator<String> iter = cityNames.iterator();
+        while (iter.hasNext()) {
+            String cityName = iter.next();
+            if (!hasEnglishChars(cityName)) {
+                iter.remove();
+            }
+        }
+    }
 
+    private boolean hasEnglishChars(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (Character.UnicodeBlock.of(c) == Character.UnicodeBlock.ARABIC
+                    || Character.UnicodeBlock.of(c) == Character.UnicodeBlock.HEBREW) {
+                return false;
+            }
+        }
+        return true;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,9 +120,17 @@ public class EditParkingFragment extends Fragment {
         sizeSpinnerAdapter.setDropDownViewResource(R.layout.list_item);
         sizeSpinner.setAdapter(sizeSpinnerAdapter);
 
-        ArrayAdapter<String> cityAutoCompleteAdapter = new ArrayAdapter(getContext(), R.layout.list_item, citiesArray);
+        ArrayAdapter<String> cityAutoCompleteAdapter = new ArrayAdapter(getContext(), R.layout.list_item, new LinkedList());
         cityAutoComplete.setDropDownHeight(600);
         cityAutoComplete.setAdapter(cityAutoCompleteAdapter);
+
+        LiveData<List<City>> citiesLive = CityMock.instance.getCities();
+        citiesLive.observe(getViewLifecycleOwner(), citiesList -> {
+            List<String> cityNames = citiesList.stream().map(City::getName).collect(Collectors.toList());
+            removeNonEnglishCityNames(cityNames);
+            ArrayAdapter<String> cityAutoCompleteAdapter2 = new ArrayAdapter(getContext(), R.layout.list_item, cityNames);
+            cityAutoComplete.setAdapter(cityAutoCompleteAdapter2);
+        });
 
         addImageButton.setOnClickListener(view2 -> {
             cameraAppLauncher.launch(null);
@@ -120,11 +150,6 @@ public class EditParkingFragment extends Fragment {
                 String userId = LoginService.instance().getLoginService().getUserId();
                 String size = sizeSpinner.getSelectedItem().toString();
                 String city = cityAutoComplete.getText().toString();
-
-                if (!Arrays.stream(citiesArray).anyMatch(str -> str.equals(city))) {
-                    cityAutoComplete.setError("choose from here");
-                    throw new IOException("City not from list");
-                }
 
                 if (!isUserAddImage) throw new Exception("Did not edit image");
 
