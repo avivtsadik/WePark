@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/fragment_profile_nav_graph"
         android:name="fragments.mainFragments.ProfileFragment"
-        android:label="Edit Parking"
+        android:label="Edit Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/fragment_my_posts_nav_graph"
