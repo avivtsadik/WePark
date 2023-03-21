@@ -4,14 +4,18 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.wepark.R;
+
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import models.Interfaces.OnActionDoneListener;
 import room.AppLocalDb;
@@ -59,6 +63,14 @@ public class ParkingMock {
                         Log.d("TAG", " firebase return : " + list.size());
                         Long time = localLastUpdate;
 
+                        LiveData<List<Parking>> av = getAllParkingLots();
+
+                        for (Parking pr : av.getValue()) {
+                            if (!user.getFavorites().contains(pr.getCity())) {
+                                localDb.parkingDao().delete(pr);
+                            }
+                        }
+
                         for (Parking pr : list) {
                             if (pr.getMark().equals("D")) {
                                 localDb.parkingDao().delete(pr);
@@ -74,6 +86,16 @@ public class ParkingMock {
                         Parking.setLocalLastUpdate(time);
                         EventStudentsListLoadingState.postValue(LoadingState.NOT_LOADING_PARKING);
                     });
+                });
+            }else{
+                executor.execute(() -> {
+//                    Long time = localLastUpdate;
+
+                    localDb.parkingDao().deleteAll();
+
+                    //update local last update
+//                    Parking.setLocalLastUpdate(time);
+                    EventStudentsListLoadingState.postValue(LoadingState.NOT_LOADING_PARKING);
                 });
             }
         });
